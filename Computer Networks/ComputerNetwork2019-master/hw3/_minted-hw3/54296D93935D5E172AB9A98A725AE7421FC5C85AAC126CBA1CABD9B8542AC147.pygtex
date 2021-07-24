@@ -1,0 +1,40 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+mininet\PYGZgt{} h1 ping6 \PYG{l+m}{2001}:638:709:b::1
+PING \PYG{l+m}{2001}:638:709:b::1\PYG{o}{(}\PYG{l+m}{2001}:638:709:b::1\PYG{o}{)} \PYG{l+m}{56} data bytes
+\PYG{l+m}{64} bytes from \PYG{l+m}{2001}:638:709:b::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{1} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.125 ms
+\PYG{l+m}{64} bytes from \PYG{l+m}{2001}:638:709:b::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{2} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.060 ms
+\PYG{l+m}{64} bytes from \PYG{l+m}{2001}:638:709:b::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{3} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.060 ms
+\PYGZca{}C
+\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYG{l+m}{2001}:638:709:b::1 ping statistics \PYGZhy{}\PYGZhy{}\PYGZhy{}
+\PYG{l+m}{3} packets transmitted, \PYG{l+m}{3} received, \PYG{l+m}{0}\PYGZpc{} packet loss, \PYG{n+nb}{time} 2050ms
+rtt min/avg/max/mdev \PYG{o}{=} \PYG{l+m}{0}.060/0.081/0.125/0.032 ms
+
+
+mininet\PYGZgt{} h2 ping6 \PYG{l+m}{2001}:638:709:a::1
+PING \PYG{l+m}{2001}:638:709:a::1\PYG{o}{(}\PYG{l+m}{2001}:638:709:a::1\PYG{o}{)} \PYG{l+m}{56} data bytes
+\PYG{l+m}{64} bytes from \PYG{l+m}{2001}:638:709:a::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{1} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.058 ms
+\PYG{l+m}{64} bytes from \PYG{l+m}{2001}:638:709:a::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{2} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.062 ms
+\PYG{l+m}{64} bytes from \PYG{l+m}{2001}:638:709:a::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{3} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.073 ms
+\PYG{l+m}{64} bytes from \PYG{l+m}{2001}:638:709:a::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{4} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.064 ms
+\PYG{l+m}{64} bytes from \PYG{l+m}{2001}:638:709:a::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{5} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.060 ms
+\PYGZca{}C
+\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYG{l+m}{2001}:638:709:a::1 ping statistics \PYGZhy{}\PYGZhy{}\PYGZhy{}
+\PYG{l+m}{5} packets transmitted, \PYG{l+m}{5} received, \PYG{l+m}{0}\PYGZpc{} packet loss, \PYG{n+nb}{time} 4087ms
+rtt min/avg/max/mdev \PYG{o}{=} \PYG{l+m}{0}.058/0.063/0.073/0.008 ms
+
+
+
+mininet\PYGZgt{} h1 traceroute \PYG{l+m}{2001}:638:709:b::1
+traceroute to \PYG{l+m}{2001}:638:709:b::1 \PYG{o}{(}\PYG{l+m}{2001}:638:709:b::1\PYG{o}{)}, \PYG{l+m}{30} hops max, \PYG{l+m}{80} byte packets
+ \PYG{l+m}{1}  \PYG{l+m}{2001}:638:709:a::f \PYG{o}{(}\PYG{l+m}{2001}:638:709:a::f\PYG{o}{)}  \PYG{l+m}{0}.033 ms  \PYG{l+m}{0}.018 ms  \PYG{l+m}{0}.008 ms
+ \PYG{l+m}{2}  \PYG{l+m}{2001}:638:709:f::2 \PYG{o}{(}\PYG{l+m}{2001}:638:709:f::2\PYG{o}{)}  \PYG{l+m}{0}.018 ms  \PYG{l+m}{0}.009 ms  \PYG{l+m}{0}.009 ms
+ \PYG{l+m}{3}  \PYG{l+m}{2001}:638:709:b::1 \PYG{o}{(}\PYG{l+m}{2001}:638:709:b::1\PYG{o}{)}  \PYG{l+m}{0}.019 ms  \PYG{l+m}{0}.010 ms  \PYG{l+m}{0}.010 ms
+
+
+
+mininet\PYGZgt{} h2 traceroute \PYG{l+m}{2001}:638:709:a::1
+traceroute to \PYG{l+m}{2001}:638:709:a::1 \PYG{o}{(}\PYG{l+m}{2001}:638:709:a::1\PYG{o}{)}, \PYG{l+m}{30} hops max, \PYG{l+m}{80} byte packets
+ \PYG{l+m}{1}  \PYG{l+m}{2001}:638:709:b::f \PYG{o}{(}\PYG{l+m}{2001}:638:709:b::f\PYG{o}{)}  \PYG{l+m}{0}.030 ms  \PYG{l+m}{0}.007 ms  \PYG{l+m}{0}.007 ms
+ \PYG{l+m}{2}  \PYG{l+m}{2001}:638:709:f::1 \PYG{o}{(}\PYG{l+m}{2001}:638:709:f::1\PYG{o}{)}  \PYG{l+m}{0}.019 ms  \PYG{l+m}{0}.009 ms  \PYG{l+m}{0}.008 ms
+ \PYG{l+m}{3}  \PYG{l+m}{2001}:638:709:a::1 \PYG{o}{(}\PYG{l+m}{2001}:638:709:a::1\PYG{o}{)}  \PYG{l+m}{0}.019 ms  \PYG{l+m}{0}.010 ms  \PYG{l+m}{0}.010 ms
+\end{Verbatim}

@@ -1,0 +1,185 @@
+\documentclass[a4paper]{article}
+\usepackage[pdftex]{hyperref}
+\usepackage[latin1]{inputenc}
+\usepackage[english]{babel}
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{ifthen}
+\usepackage{listings}
+% move the asterisk at the right position
+\lstset{basicstyle=\ttfamily,tabsize=4,literate={*}{${}^*{}$}1}
+%\lstset{language=C,basicstyle=\ttfamily}
+\usepackage{moreverb}
+\usepackage{palatino}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{color}
+
+%% pdflatex?
+\newif\ifpdf
+\ifx\pdfoutput\undefined
+\pdffalse % we are not running PDFLaTeX
+\else
+\pdfoutput=1 % we are running PDFLaTeX
+\pdftrue
+\fi
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\else
+\usepackage{graphicx}
+\fi
+\ifpdf
+\DeclareGraphicsExtensions{.pdf, .jpg}
+\else
+\DeclareGraphicsExtensions{.eps, .jpg}
+\fi
+
+\parindent=0cm
+\parskip=0cm
+
+\setlength{\columnseprule}{0.4pt}
+\addtolength{\columnsep}{2pt}
+
+\addtolength{\textheight}{5.5cm}
+\addtolength{\topmargin}{-26mm}
+\pagestyle{empty}
+
+%%
+%% Sheet setup
+%% 
+\newcommand{\coursename}{Computer Networks}
+\newcommand{\courseno}{CO20-320301}
+ 
+\newcommand{\sheettitle}{Homework}
+\newcommand{\mytitle}{}
+\newcommand{\mytoday}{March 10, 2020}
+
+% Current Assignment number
+\newcounter{assignmentno}
+\setcounter{assignmentno}{1}
+
+% Current Problem number, should always start at 1
+\newcounter{problemno}
+\setcounter{problemno}{1}
+
+%%
+%% problem and bonus environment
+%%
+\newcounter{probcalc}
+\newcommand{\problem}[2]{
+  \pagebreak[2]
+  \setcounter{probcalc}{#2}
+  ~\\
+  {\large \textbf{Problem \textcolor{black}{\arabic{assignmentno}}.\textcolor{black}{\arabic{problemno}}} \hspace{0.2cm}\textit{#1}} \refstepcounter{problemno}\vspace{2pt}\\}
+
+\newcommand{\bonus}[2]{
+  \pagebreak[2]
+  \setcounter{probcalc}{#2}
+  ~\\
+  {\large \textbf{Bonus Problem \textcolor{black}{\arabic{assignmentno}}.\textcolor{black}{\arabic{problemno}}} \hspace{0.2cm}\textit{#1}} \refstepcounter{problemno}\vspace{2pt}\\}
+
+%% some counters  
+\newcommand{\assignment}{\arabic{assignmentno}}
+
+%% solution  
+\newcommand{\solution}{\pagebreak[2]{\bf Solution:}\\}
+
+%% Hyperref Setup
+\hypersetup{pdftitle={Homework \assignment},
+  pdfsubject={\coursename},
+  pdfauthor={},
+  pdfcreator={},
+  pdfkeywords={Computer Architecture and Programming Languages},
+  %  pdfpagemode={FullScreen},
+  %colorlinks=true,
+  %bookmarks=true,
+  %hyperindex=true,
+  bookmarksopen=false,
+  bookmarksnumbered=true,
+  breaklinks=true,
+  %urlcolor=darkblue
+  urlbordercolor={0 0 0.7}
+}
+
+\begin{document}
+\coursename \hfill Course: \courseno\\
+Jacobs University Bremen \hfill \mytoday\\
+{Romelda Blaceri}\hfill
+\vspace*{0.3cm}\\
+\begin{center}
+{\Large \sheettitle{} \textcolor{black}{\assignment}\\}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%% Problem 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\problem{}{0}
+\solution
+\textbf{a)} I measured the following results: \\ \\
+amazon.com $\rightarrow$ time ranged between 100ms to 109ms, on average about 104ms. \\
+www.amazon.com $\rightarrow$ time ranged between 9.25ms to 18.2ms, on average about 14ms. \\
+www.jacobs-university.de $\rightarrow$ time ranged between 27ms to 137ms, on average about 57ms.  \\
+moodle.jacobs-university.de $\rightarrow$ time ranged between 2.5ms to 60ms, on average about 15ms.  \\
+
+What I observed is that comparing the times of the first 2 hosts, the one that starts with 'www' takes significantly less time for a round trip. Other than that, an interesting observation would be that when studying the output of the ping
+command, it shows the statistics of domain \textbf{amazon.com} 
+when running ping on \textbf{amazon.com}, but shows the statistics of domain \\ \textbf{d3ag4hukkh62yn.cloudfront.net} when running ping on \textbf{www.amazon.com}. This only happened with this host and not the others.
+\\
+
+The measurements were done at about 9pm on 8 March. The tool used was \textit{ping} on Z shell in Ubuntu with version 'ping from iputils s20190709'.
+ \newline
+
+\textbf{b}) I measured the following results: \\ \\
+amazon.com $\rightarrow$ 3 AS680 hops and 6 AS1299 hops making a total of 9 hops. \\
+www.amazon.com $\rightarrow$ 3 AS680 hops and 1 AS16509 hops making a total of 4 hops.. \\
+www.jacobs-university.de $\rightarrow$ 3 AS680 hops and 3 AS24940 hops making a total of 6 hops.  \\
+moodle.jacobs-university.de $\rightarrow$  only 1 AS680 hop.\\
+
+One interesting observation is that in all hosts, AS680 was visited at least once. Also there were many unknown hops (showing as AS???). Including them the total number of hops goes to 11, 7, 9 and 2 respectively.
+
+The measurements were taken at about 9 25pm using \textbf{mtr} from Z shell in Ubuntu, using eduroam as a network.
+
+\\
+%%%%%%%%%%%%%%%%%%%%% Problem 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\problem{}{0}
+\solution
+\textbf{a})1. AS680 has registry \textbf{RIPE} and is owned by a German Research Network.  \newline 2. AS1299 also has registry \textbf{RIPE} and is owned by a company named Telia. \newline
+3. AS16509 has registry of \textit{ARIN} and is owned by Amazon. \newline 4. AS24940 also has registry \textbf{RIPE} and is owned by HETZNER.\\
+\textbf{b})The prefix is used by Jacobs University Bremen (also named International Uni Bremen), and has a registry of \textbf{RIPE}.
+This prefix is not globally announced. The one that is globally announced is 2001:638::/32. \\
+
+\newline
+
+%%%%%%%%%%%%%%%%%%%%% Problem 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\problem{}{0}
+\solution
+\textbf{a}) The bandwidth was about 9.7 Mbits/sec, and since it did not exceed 10 Mbits/sec it did match what I was expecting.
+\\
+
+\textbf{b}) I measured about 0.93ms of round trip time when using ping from host 1 to host 2 while not using 'iperf', and about 15.68ms or round trip time while using 'iperf'. These times suggest to me that 'iperf' consumed a major part of the bandwidth of the network giving the above numbers for the round trip time.
+\\
+
+\\
+\newpage
+%%%%%%%%%%%%%%%%%%%%% Problem 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\problem{}{0}
+\solution
+\textbf{a}) I measured about 0.44ms for both cases, which suggests that the communication between h3 and h4 is not impacted in any way by that of h1 and h2.\\
+\textbf{b}) For the bandwidth of both  I measured about 9.7 Mbits/sec, which again suggests that the communication between h3 and h4 is not impacted in any way by that of h1 and h2.
+\\
+\newline
+\\ \\
+
+%%%%%%%%%%%%%%%%%%%%% Problem 5 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\problem{}{0}
+\solution
+\textbf{a}) With a speed that also reached 10.1 Mbits/sec once, the information is transmitted faster between h2 to h3 and h1 to h4, than from h1 to h3 and h2 to h4.
+\\
+
+\textbf{b}) I measured about 9.8 Mbits/sec for the data transmitted from h1 to h4 and about 8 Mbits/sec for the data transmitted from h3 to h6. The reason why the second measurement is a bit low is because of the 5 percent loss in packages between s2 and s3 which lowers the bandwidth.
+\\
+\end{document}
+

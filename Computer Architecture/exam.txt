@@ -1,0 +1,15 @@
+Architecture:
+
+expalin how an instruction work in a datapath
+explain instruction analysis
+hybrid compilation
+difference compiler-interpreter
+
+write a grammar *** - a set of rules
+table given for expressions - recognize all words of this type
+remove some transition rules and make it it a way that it recognizes sth (not the whole thing but ourselves)
+MIPS - no C code to write mips, but from MIPS derive binary format (numbers given) just know the format and the lengths
+datapath: mark relevant components, dont remember whole figure but draw the components for 1 or more instructions
+delays: if give, path will be given, come up yourself which paths are relevant for some instruction which not
+performance: determine slower quicker performances (copmute CPU execution time or similar)
+No part 1 - No flip flops, no boolean, no midterm related topics

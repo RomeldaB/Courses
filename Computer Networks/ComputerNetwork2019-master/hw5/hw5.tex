@@ -1,0 +1,79 @@
+\documentclass{article}
+%% course name and homework number
+\newcommand{\coursename}{Computer Network}
+\newcommand{\hwnumber}{5}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\graphicspath{ {img/} }
+\usepackage{titlesec}
+\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem} %% custom auto-index for enumerate environment
+\pagestyle{fancy}
+%basic page layout
+
+%draw finite state machine
+\usepackage{tikz}
+\newcommand{\Lcvy}{\mathcal{L}}
+%header and footer settings
+\lhead{\coursename \thinspace Assignment \hwnumber}
+\chead{Yiping Deng}
+\rhead{\today}
+
+\titlelabel{\thetitle\enspace}
+
+\begin{document}
+\title{\coursename \thinspace Assignment \hwnumber}
+\author{Yiping Deng}
+\maketitle
+\thispagestyle{fancy}
+
+%% start of homework
+\section*{Problem 1}
+\subsection*{a)}
+SEQ = 1030, ACK= 3848 F=ACK WIN=4000, it carries 1200 due to the
+ackknowlegement.(2230 - 1030).
+
+\subsection*{b)}
+To inform the other side of the connection that the part of the data in the
+buffer has been consumed, and the window size has changed since.
+
+\subsection*{c)}
+SACK works by sending the received segment range in the duplicate
+acknowledgement. This will allow the other side of the transmission to send only
+the missing segment, not all the segment after the lost segment.
+
+The two number in the SACK indicates the left edge and the right edge of the
+segment received. Since we cannot simply specify the segment missing, we can, in
+the other words, specify the segments(ranges of the data) we received.
+
+\subsection*{d)}
+In segment 8, the ACK is used to indicate missing segments. Left edge is 3430,
+right edge is 4630
+\subsection*{e)}
+The client goes to the wait state. Client initiated the closing(active close),
+sending a FIN, receive a ACK and FIN, then send the ACK back and go to wait in
+case ACK got lost in the flight.
+
+\section*{Problem 2}
+\subsection*{a)}
+1300000/12 = 108,333 p/s
+\subsection*{b)}
+Minimum: 30000
+Maximum: 300000
+\subsection*{c)}
+6 segments got lost and is not yet transmitted at t = 12
+\subsection*{d)}
+At the beginning of the TCP connection, a large number of groups of TCP
+fragments are send from t=0.5 to t=1.4. However, a lot of them are lost and
+retransmitted during t=1.6 to t=3.3. From t=3.3 onwards is the normal TCP communicartion.
+
+
+\end{document}

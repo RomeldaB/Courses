@@ -1,0 +1,56 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+mininet\PYGZgt{} r1 ifconfig r1\PYGZhy{}eth1 mtu \PYG{l+m}{1400}
+mininet\PYGZgt{} r2 ifconfig r2\PYGZhy{}eth0 mtu \PYG{l+m}{1400}
+mininet\PYGZgt{} h1 ifconfig
+h1\PYGZhy{}eth0: \PYG{n+nv}{flags}\PYG{o}{=}\PYG{l+m}{4163}\PYGZlt{}UP,BROADCAST,RUNNING,MULTICAST\PYGZgt{}  mtu \PYG{l+m}{1500}
+        inet6 fe80::f8fb:27ff:fe5a:ef33  prefixlen \PYG{l+m}{64}  scopeid 0x20\PYGZlt{}link\PYGZgt{}
+        inet6 \PYG{l+m}{2001}:638:709:a::1  prefixlen \PYG{l+m}{64}  scopeid 0x0\PYGZlt{}global\PYGZgt{}
+        ether fa:fb:27:5a:ef:33  txqueuelen \PYG{l+m}{1000}  \PYG{o}{(}Ethernet\PYG{o}{)}
+        RX packets \PYG{l+m}{71}  bytes \PYG{l+m}{7026} \PYG{o}{(}\PYG{l+m}{7}.0 KB\PYG{o}{)}
+        RX errors \PYG{l+m}{0}  dropped \PYG{l+m}{0}  overruns \PYG{l+m}{0}  frame \PYG{l+m}{0}
+        TX packets \PYG{l+m}{45}  bytes \PYG{l+m}{4282} \PYG{o}{(}\PYG{l+m}{4}.2 KB\PYG{o}{)}
+        TX errors \PYG{l+m}{0}  dropped \PYG{l+m}{0} overruns \PYG{l+m}{0}  carrier \PYG{l+m}{0}  collisions \PYG{l+m}{0}
+
+lo: \PYG{n+nv}{flags}\PYG{o}{=}\PYG{l+m}{73}\PYGZlt{}UP,LOOPBACK,RUNNING\PYGZgt{}  mtu \PYG{l+m}{65536}
+        inet \PYG{l+m}{127}.0.0.1  netmask \PYG{l+m}{255}.0.0.0
+        inet6 ::1  prefixlen \PYG{l+m}{128}  scopeid 0x10\PYGZlt{}host\PYGZgt{}
+        loop  txqueuelen \PYG{l+m}{1000}  \PYG{o}{(}Local Loopback\PYG{o}{)}
+        RX packets \PYG{l+m}{12}  bytes \PYG{l+m}{1716} \PYG{o}{(}\PYG{l+m}{1}.7 KB\PYG{o}{)}
+        RX errors \PYG{l+m}{0}  dropped \PYG{l+m}{0}  overruns \PYG{l+m}{0}  frame \PYG{l+m}{0}
+        TX packets \PYG{l+m}{12}  bytes \PYG{l+m}{1716} \PYG{o}{(}\PYG{l+m}{1}.7 KB\PYG{o}{)}
+        TX errors \PYG{l+m}{0}  dropped \PYG{l+m}{0} overruns \PYG{l+m}{0}  carrier \PYG{l+m}{0}  collisions \PYG{l+m}{0}
+mininet\PYGZgt{} h2 ifconfig
+h2\PYGZhy{}eth0: \PYG{n+nv}{flags}\PYG{o}{=}\PYG{l+m}{4163}\PYGZlt{}UP,BROADCAST,RUNNING,MULTICAST\PYGZgt{}  mtu \PYG{l+m}{1500}
+        inet6 fe80::c041:eeff:fe30:8074  prefixlen \PYG{l+m}{64}  scopeid 0x20\PYGZlt{}link\PYGZgt{}
+        inet6 \PYG{l+m}{2001}:638:709:b::1  prefixlen \PYG{l+m}{64}  scopeid 0x0\PYGZlt{}global\PYGZgt{}
+        ether c2:41:ee:30:80:74  txqueuelen \PYG{l+m}{1000}  \PYG{o}{(}Ethernet\PYG{o}{)}
+        RX packets \PYG{l+m}{74}  bytes \PYG{l+m}{7284} \PYG{o}{(}\PYG{l+m}{7}.2 KB\PYG{o}{)}
+        RX errors \PYG{l+m}{0}  dropped \PYG{l+m}{0}  overruns \PYG{l+m}{0}  frame \PYG{l+m}{0}
+        TX packets \PYG{l+m}{47}  bytes \PYG{l+m}{4454} \PYG{o}{(}\PYG{l+m}{4}.4 KB\PYG{o}{)}
+        TX errors \PYG{l+m}{0}  dropped \PYG{l+m}{0} overruns \PYG{l+m}{0}  carrier \PYG{l+m}{0}  collisions \PYG{l+m}{0}
+
+lo: \PYG{n+nv}{flags}\PYG{o}{=}\PYG{l+m}{73}\PYGZlt{}UP,LOOPBACK,RUNNING\PYGZgt{}  mtu \PYG{l+m}{65536}
+        inet \PYG{l+m}{127}.0.0.1  netmask \PYG{l+m}{255}.0.0.0
+        inet6 ::1  prefixlen \PYG{l+m}{128}  scopeid 0x10\PYGZlt{}host\PYGZgt{}
+        loop  txqueuelen \PYG{l+m}{1000}  \PYG{o}{(}Local Loopback\PYG{o}{)}
+        RX packets \PYG{l+m}{12}  bytes \PYG{l+m}{1716} \PYG{o}{(}\PYG{l+m}{1}.7 KB\PYG{o}{)}
+        RX errors \PYG{l+m}{0}  dropped \PYG{l+m}{0}  overruns \PYG{l+m}{0}  frame \PYG{l+m}{0}
+        TX packets \PYG{l+m}{12}  bytes \PYG{l+m}{1716} \PYG{o}{(}\PYG{l+m}{1}.7 KB\PYG{o}{)}
+        TX errors \PYG{l+m}{0}  dropped \PYG{l+m}{0} overruns \PYG{l+m}{0}  carrier \PYG{l+m}{0}  collisions \PYG{l+m}{0}
+
+mininet\PYGZgt{} h1 tcpdump \PYGZhy{}i h1\PYGZhy{}eth0 \PYGZhy{}s \PYG{l+m}{65535} \PYGZhy{}w ping1450mtu.dump \PYG{p}{\PYGZam{}}
+tcpdump: h1 ping6 \PYGZhy{}M \PYG{k}{do} \PYGZhy{}s \PYG{l+m}{1450} \PYG{l+m}{2001}:638:709:b::1
+listening on h1\PYGZhy{}eth0, link\PYGZhy{}type EN10MB \PYG{o}{(}Ethernet\PYG{o}{)}, capture size \PYG{l+m}{65535} bytes
+PING \PYG{l+m}{2001}:638:709:b::1\PYG{o}{(}\PYG{l+m}{2001}:638:709:b::1\PYG{o}{)} \PYG{l+m}{1450} data bytes
+From \PYG{l+m}{2001}:638:709:a::f \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{1} Packet too big: \PYG{n+nv}{mtu}\PYG{o}{=}\PYG{l+m}{1400}
+\PYG{l+m}{1458} bytes from \PYG{l+m}{2001}:638:709:b::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{2} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.208 ms
+\PYG{l+m}{1458} bytes from \PYG{l+m}{2001}:638:709:b::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{3} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.094 ms
+\PYG{l+m}{1458} bytes from \PYG{l+m}{2001}:638:709:b::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{4} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.083 ms
+\PYG{l+m}{1458} bytes from \PYG{l+m}{2001}:638:709:b::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{5} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.085 ms
+\PYG{l+m}{1458} bytes from \PYG{l+m}{2001}:638:709:b::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{6} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.081 ms
+\PYG{l+m}{1458} bytes from \PYG{l+m}{2001}:638:709:b::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{7} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.084 ms
+\PYG{l+m}{1458} bytes from \PYG{l+m}{2001}:638:709:b::1: \PYG{n+nv}{icmp\PYGZus{}seq}\PYG{o}{=}\PYG{l+m}{8} \PYG{n+nv}{ttl}\PYG{o}{=}\PYG{l+m}{62} \PYG{n+nv}{time}\PYG{o}{=}\PYG{l+m}{0}.083 ms
+\PYGZca{}C40 packets captured
+\PYG{l+m}{40} packets received by filter
+\PYG{l+m}{0} packets dropped by kernel
+\end{Verbatim}

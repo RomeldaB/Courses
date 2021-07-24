@@ -1,0 +1,163 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nty/global//global/global}
+  \entry{RFC6763}{report}{}
+    \name{author}{2}{}{%
+      {{hash=CS}{%
+         family={Cheshire},
+         familyi={C\bibinitperiod},
+         given={S.},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=KM}{%
+         family={Krochmal},
+         familyi={K\bibinitperiod},
+         given={M.},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {RFC Editor}%
+    }
+    \strng{namehash}{CSKM1}
+    \strng{fullhash}{CSKM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{howpublished}{Internet Requests for Comments}
+    \field{issn}{2070-1721}
+    \field{note}{\url{http://www.rfc-editor.org/rfc/rfc6763.txt}}
+    \field{number}{6763}
+    \field{title}{DNS-Based Service Discovery}
+    \verb{url}
+    \verb http://www.rfc-editor.org/rfc/rfc6763.txt
+    \endverb
+    \list{institution}{1}{%
+      {RFC Editor}%
+    }
+    \field{type}{RFC}
+    \field{year}{2013}
+    \warn{\item Invalid format of field 'month'}
+  \endentry
+
+  \entry{RFC6762}{report}{}
+    \name{author}{2}{}{%
+      {{hash=CS}{%
+         family={Cheshire},
+         familyi={C\bibinitperiod},
+         given={S.},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=KM}{%
+         family={Krochmal},
+         familyi={K\bibinitperiod},
+         given={M.},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {RFC Editor}%
+    }
+    \strng{namehash}{CSKM1}
+    \strng{fullhash}{CSKM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{howpublished}{Internet Requests for Comments}
+    \field{issn}{2070-1721}
+    \field{note}{\url{http://www.rfc-editor.org/rfc/rfc6762.txt}}
+    \field{number}{6762}
+    \field{title}{Multicast DNS}
+    \verb{url}
+    \verb http://www.rfc-editor.org/rfc/rfc6762.txt
+    \endverb
+    \list{institution}{1}{%
+      {RFC Editor}%
+    }
+    \field{type}{RFC}
+    \field{year}{2013}
+    \warn{\item Invalid format of field 'month'}
+  \endentry
+
+  \entry{cloudflareDNS}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=C}{%
+         family={Cloudflare},
+         familyi={C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{C1}
+    \strng{fullhash}{C1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+  \field{howpublished}{\url{https://www.cloudflare.com/learning/dns/what-is-dns/}}
+    \field{title}{What Is DNS? | How DNS Works}
+  \endentry
+
+  \entry{RFC2782}{report}{}
+    \name{author}{3}{}{%
+      {{hash=GA}{%
+         family={Gulbrandsen},
+         familyi={G\bibinitperiod},
+         given={Arnt},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=VP}{%
+         family={Vixie},
+         familyi={V\bibinitperiod},
+         given={Paul},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=EL}{%
+         family={Esibov},
+         familyi={E\bibinitperiod},
+         given={Levon},
+         giveni={L\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {RFC Editor}%
+    }
+    \strng{namehash}{GAVPEL1}
+    \strng{fullhash}{GAVPEL1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{howpublished}{Internet Requests for Comments}
+    \field{issn}{2070-1721}
+    \field{note}{\url{http://www.rfc-editor.org/rfc/rfc2782.txt}}
+    \field{number}{2782}
+    \field{title}{A DNS RR for specifying the location of services (DNS SRV)}
+    \verb{url}
+    \verb http://www.rfc-editor.org/rfc/rfc2782.txt
+    \endverb
+    \list{institution}{1}{%
+      {RFC Editor}%
+    }
+    \field{type}{RFC}
+    \field{year}{2000}
+    \warn{\item Invalid format of field 'month'}
+  \endentry
+\enddatalist
+\endinput

@@ -1,0 +1,131 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+ch}{\PYGZsh{}!/usr/bin/env python}
+\PYG{k+kn}{from} \PYG{n+nn}{mininet.cli} \PYG{k+kn}{import} \PYG{n}{CLI}
+\PYG{k+kn}{from} \PYG{n+nn}{mininet.net} \PYG{k+kn}{import} \PYG{n}{Mininet}
+\PYG{k+kn}{from} \PYG{n+nn}{mininet.nodelib} \PYG{k+kn}{import} \PYG{n}{LinuxBridge}
+\PYG{k+kn}{from} \PYG{n+nn}{mininet.log} \PYG{k+kn}{import} \PYG{n}{setLogLevel}
+
+\PYG{k}{def} \PYG{n+nf}{set\PYGZus{}ipv6}\PYG{p}{(}\PYG{n}{host}\PYG{p}{,} \PYG{n}{interface}\PYG{p}{,} \PYG{n}{ip}\PYG{p}{):}
+    \PYG{k}{return} \PYG{n}{host}\PYG{o}{.}\PYG{n}{cmd}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}ip \PYGZhy{}6 addr add \PYGZdq{}} \PYG{o}{+} \PYG{n}{ip} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{} dev \PYGZdq{}} \PYG{o}{+} \PYG{n}{interface}\PYG{p}{)}
+
+\PYG{k}{def} \PYG{n+nf}{set\PYGZus{}ipv6\PYGZus{}gateway}\PYG{p}{(}\PYG{n}{host}\PYG{p}{,} \PYG{n}{gateway}\PYG{p}{):}
+    \PYG{k}{return} \PYG{n}{host}\PYG{o}{.}\PYG{n}{cmd}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}ip \PYGZhy{}6 route add default via \PYGZdq{}} \PYG{o}{+} \PYG{n}{gateway}\PYG{p}{)}
+
+\PYG{k}{def} \PYG{n+nf}{set\PYGZus{}ipv6\PYGZus{}device\PYGZus{}route}\PYG{p}{(}\PYG{n}{host}\PYG{p}{,} \PYG{n}{subnet}\PYG{p}{,} \PYG{n}{interface}\PYG{p}{):}
+    \PYG{k}{return} \PYG{n}{host}\PYG{o}{.}\PYG{n}{cmd}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}ip \PYGZhy{}6 route add \PYGZdq{}} \PYG{o}{+} \PYG{n}{subnet} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{} dev \PYGZdq{}} \PYG{o}{+} \PYG{n}{interface}\PYG{p}{)}
+
+\PYG{k}{def} \PYG{n+nf}{set\PYGZus{}ipv6\PYGZus{}gateway\PYGZus{}route}\PYG{p}{(}\PYG{n}{host}\PYG{p}{,} \PYG{n}{subnet}\PYG{p}{,} \PYG{n}{gateway}\PYG{p}{,} \PYG{n}{interface}\PYG{p}{):}
+    \PYG{c+c1}{\PYGZsh{} useful for the forward table}
+    \PYG{k}{return} \PYG{n}{host}\PYG{o}{.}\PYG{n}{cmd}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}ip \PYGZhy{}6 route add \PYGZdq{}} \PYG{o}{+} \PYG{n}{subnet} \PYG{o}{+}
+            \PYG{l+s+s2}{\PYGZdq{} via \PYGZdq{}} \PYG{o}{+} \PYG{n}{gateway} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{} dev \PYGZdq{}} \PYG{o}{+} \PYG{n}{interface}\PYG{p}{)}
+
+    
+
+
+\PYG{k}{if} \PYG{n+nv+vm}{\PYGZus{}\PYGZus{}name\PYGZus{}\PYGZus{}} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZus{}main\PYGZus{}\PYGZus{}\PYGZsq{}}\PYG{p}{:}
+    \PYG{n}{setLogLevel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}info\PYGZsq{}}\PYG{p}{)}
+
+    \PYG{n}{net} \PYG{o}{=} \PYG{n}{Mininet}\PYG{p}{(}\PYG{n}{switch}\PYG{o}{=}\PYG{n}{LinuxBridge}\PYG{p}{,} \PYG{n}{controller}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{)}
+
+    \PYG{n}{h1} \PYG{o}{=} \PYG{n}{net}\PYG{o}{.}\PYG{n}{addHost}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}h1\PYGZsq{}}\PYG{p}{,} \PYG{n}{ip}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} create rest of the topology here}
+    \PYG{n}{s1} \PYG{o}{=} \PYG{n}{net}\PYG{o}{.}\PYG{n}{addSwitch}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}s1\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{r1} \PYG{o}{=} \PYG{n}{net}\PYG{o}{.}\PYG{n}{addHost}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}r1\PYGZsq{}}\PYG{p}{,} \PYG{n}{ip} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{)}
+    \PYG{n}{s0} \PYG{o}{=} \PYG{n}{net}\PYG{o}{.}\PYG{n}{addSwitch}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}s0\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{r2} \PYG{o}{=} \PYG{n}{net}\PYG{o}{.}\PYG{n}{addHost}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}r2\PYGZsq{}}\PYG{p}{,} \PYG{n}{ip} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{)}
+    \PYG{n}{s2} \PYG{o}{=} \PYG{n}{net}\PYG{o}{.}\PYG{n}{addSwitch}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}s2\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{h2} \PYG{o}{=} \PYG{n}{net}\PYG{o}{.}\PYG{n}{addHost}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}h2\PYGZsq{}}\PYG{p}{,} \PYG{n}{ip} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{)}
+    \PYG{n}{r3} \PYG{o}{=} \PYG{n}{net}\PYG{o}{.}\PYG{n}{addHost}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}r3\PYGZsq{}}\PYG{p}{,} \PYG{n}{ip} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{)}
+    \PYG{n}{s3} \PYG{o}{=} \PYG{n}{net}\PYG{o}{.}\PYG{n}{addSwitch}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}s3\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{r4} \PYG{o}{=} \PYG{n}{net}\PYG{o}{.}\PYG{n}{addHost}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}r4\PYGZsq{}}\PYG{p}{,} \PYG{n}{ip} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} addr info}
+    \PYG{n}{h1\PYGZus{}eth0\PYGZus{}addr} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}2001:638:709:a::1/64\PYGZdq{}}
+    \PYG{n}{r1\PYGZus{}eth0\PYGZus{}addr} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}2001:638:709:a::f/64\PYGZdq{}}
+    \PYG{n}{r1\PYGZus{}eth1\PYGZus{}addr} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}2001:638:709:f::1/64\PYGZdq{}}
+    \PYG{n}{r2\PYGZus{}eth0\PYGZus{}addr} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}2001:638:709:f::2/64\PYGZdq{}}
+    \PYG{n}{r2\PYGZus{}eth1\PYGZus{}addr} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}2001:638:709:b::f/64\PYGZdq{}}
+    \PYG{n}{h2\PYGZus{}eth0\PYGZus{}addr} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}2001:638:709:b::1/64\PYGZdq{}}
+    \PYG{n}{r3\PYGZus{}eth0\PYGZus{}addr} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}2001:638:709:a::e/64\PYGZdq{}}
+    \PYG{n}{r3\PYGZus{}eth1\PYGZus{}addr} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}2001:638:709:e::1/64\PYGZdq{}}
+    \PYG{n}{r4\PYGZus{}eth0\PYGZus{}addr} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}2001:638:709:e::2/64\PYGZdq{}}
+    \PYG{n}{r4\PYGZus{}eth1\PYGZus{}addr} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}2001:638:709:b::e/64\PYGZdq{}}
+
+    \PYG{c+c1}{\PYGZsh{} subnet info}
+    \PYG{n}{subnet1\PYGZus{}addr} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}2001:638:709:a::/64\PYGZdq{}}
+    \PYG{n}{subnet2\PYGZus{}addr} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}2001:638:709:f::/64\PYGZdq{}}
+    \PYG{n}{subnet3\PYGZus{}addr} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}2001:638:709:b::/64\PYGZdq{}}
+    \PYG{n}{subnet4\PYGZus{}addr} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{} 2001:638:709:e::/64\PYGZdq{}}
+
+    \PYG{c+c1}{\PYGZsh{} link the router and switches}
+    \PYG{n}{net}\PYG{o}{.}\PYG{n}{addLink}\PYG{p}{(}\PYG{n}{h1}\PYG{p}{,} \PYG{n}{s1}\PYG{p}{)}
+    \PYG{n}{net}\PYG{o}{.}\PYG{n}{addLink}\PYG{p}{(}\PYG{n}{s1}\PYG{p}{,} \PYG{n}{r1}\PYG{p}{)}
+    \PYG{n}{net}\PYG{o}{.}\PYG{n}{addLink}\PYG{p}{(}\PYG{n}{r1}\PYG{p}{,} \PYG{n}{s0}\PYG{p}{)}
+    \PYG{n}{net}\PYG{o}{.}\PYG{n}{addLink}\PYG{p}{(}\PYG{n}{s0}\PYG{p}{,} \PYG{n}{r2}\PYG{p}{)}
+    \PYG{n}{net}\PYG{o}{.}\PYG{n}{addLink}\PYG{p}{(}\PYG{n}{r2}\PYG{p}{,} \PYG{n}{s2}\PYG{p}{)}
+    \PYG{n}{net}\PYG{o}{.}\PYG{n}{addLink}\PYG{p}{(}\PYG{n}{s2}\PYG{p}{,} \PYG{n}{h2}\PYG{p}{)}
+    \PYG{n}{net}\PYG{o}{.}\PYG{n}{addLink}\PYG{p}{(}\PYG{n}{s1}\PYG{p}{,} \PYG{n}{r3}\PYG{p}{)}
+    \PYG{n}{net}\PYG{o}{.}\PYG{n}{addLink}\PYG{p}{(}\PYG{n}{r3}\PYG{p}{,} \PYG{n}{s3}\PYG{p}{)}
+    \PYG{n}{net}\PYG{o}{.}\PYG{n}{addLink}\PYG{p}{(}\PYG{n}{s3}\PYG{p}{,} \PYG{n}{r4}\PYG{p}{)}
+    \PYG{n}{net}\PYG{o}{.}\PYG{n}{addLink}\PYG{p}{(}\PYG{n}{r4}\PYG{p}{,} \PYG{n}{s2}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} configure IPv6 addresses and forwarding table entries here}
+
+    \PYG{c+c1}{\PYGZsh{} set ipv6 addr and gateway}
+    \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}setup ipv6\PYGZdq{}}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6}\PYG{p}{(}\PYG{n}{h1}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}h1\PYGZhy{}eth0\PYGZdq{}}\PYG{p}{,} \PYG{n}{h1\PYGZus{}eth0\PYGZus{}addr}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6}\PYG{p}{(}\PYG{n}{r1}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r1\PYGZhy{}eth0\PYGZdq{}}\PYG{p}{,} \PYG{n}{r1\PYGZus{}eth0\PYGZus{}addr}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6}\PYG{p}{(}\PYG{n}{r1}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r1\PYGZhy{}eth1\PYGZdq{}}\PYG{p}{,} \PYG{n}{r1\PYGZus{}eth1\PYGZus{}addr}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6}\PYG{p}{(}\PYG{n}{r2}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r2\PYGZhy{}eth0\PYGZdq{}}\PYG{p}{,} \PYG{n}{r2\PYGZus{}eth0\PYGZus{}addr}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6}\PYG{p}{(}\PYG{n}{r2}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r2\PYGZhy{}eth1\PYGZdq{}}\PYG{p}{,} \PYG{n}{r2\PYGZus{}eth1\PYGZus{}addr}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6}\PYG{p}{(}\PYG{n}{h2}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}h2\PYGZhy{}eth0\PYGZdq{}}\PYG{p}{,} \PYG{n}{h2\PYGZus{}eth0\PYGZus{}addr}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6}\PYG{p}{(}\PYG{n}{r3}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r3\PYGZhy{}eth0\PYGZdq{}}\PYG{p}{,} \PYG{n}{r3\PYGZus{}eth0\PYGZus{}addr}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6}\PYG{p}{(}\PYG{n}{r3}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r3\PYGZhy{}eth1\PYGZdq{}}\PYG{p}{,} \PYG{n}{r3\PYGZus{}eth1\PYGZus{}addr}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6}\PYG{p}{(}\PYG{n}{r4}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r4\PYGZhy{}eth0\PYGZdq{}}\PYG{p}{,} \PYG{n}{r4\PYGZus{}eth0\PYGZus{}addr}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6}\PYG{p}{(}\PYG{n}{r4}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r4\PYGZhy{}eth1\PYGZdq{}}\PYG{p}{,} \PYG{n}{r4\PYGZus{}eth1\PYGZus{}addr}\PYG{p}{)}
+    \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}done setup ipv6\PYGZdq{}}
+
+    \PYG{c+c1}{\PYGZsh{} setup the local route}
+    \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}setup forward rules\PYGZdq{}}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}device\PYGZus{}route}\PYG{p}{(}\PYG{n}{h1}\PYG{p}{,} \PYG{n}{subnet1\PYGZus{}addr}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}h1\PYGZhy{}eth0\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}device\PYGZus{}route}\PYG{p}{(}\PYG{n}{r1}\PYG{p}{,} \PYG{n}{subnet1\PYGZus{}addr}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r1\PYGZhy{}eth0\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}device\PYGZus{}route}\PYG{p}{(}\PYG{n}{r1}\PYG{p}{,} \PYG{n}{subnet2\PYGZus{}addr}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r1\PYGZhy{}eth1\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}device\PYGZus{}route}\PYG{p}{(}\PYG{n}{r2}\PYG{p}{,} \PYG{n}{subnet2\PYGZus{}addr}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r2\PYGZhy{}eth0\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}device\PYGZus{}route}\PYG{p}{(}\PYG{n}{r2}\PYG{p}{,} \PYG{n}{subnet3\PYGZus{}addr}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r2\PYGZhy{}eth1\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}device\PYGZus{}route}\PYG{p}{(}\PYG{n}{h2}\PYG{p}{,} \PYG{n}{subnet3\PYGZus{}addr}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}h2\PYGZhy{}eth0\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}device\PYGZus{}route}\PYG{p}{(}\PYG{n}{r3}\PYG{p}{,} \PYG{n}{subnet1\PYGZus{}addr}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r3\PYGZhy{}eth0\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}device\PYGZus{}route}\PYG{p}{(}\PYG{n}{r3}\PYG{p}{,} \PYG{n}{subnet4\PYGZus{}addr}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r3\PYGZhy{}eth1\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}device\PYGZus{}route}\PYG{p}{(}\PYG{n}{r4}\PYG{p}{,} \PYG{n}{subnet4\PYGZus{}addr}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r4\PYGZhy{}eth0\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}device\PYGZus{}route}\PYG{p}{(}\PYG{n}{r4}\PYG{p}{,} \PYG{n}{subnet3\PYGZus{}addr}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r4\PYGZhy{}eth1\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}done setup forward rules\PYGZdq{}}
+
+    \PYG{c+c1}{\PYGZsh{} setup the gateway}
+    \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}setup gateway\PYGZdq{}}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}gateway}\PYG{p}{(}\PYG{n}{h1}\PYG{p}{,} \PYG{n}{r1\PYGZus{}eth0\PYGZus{}addr}\PYG{p}{[:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{3}\PYG{p}{])}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}gateway}\PYG{p}{(}\PYG{n}{h2}\PYG{p}{,} \PYG{n}{r4\PYGZus{}eth1\PYGZus{}addr}\PYG{p}{[:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{3}\PYG{p}{])}
+    \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}done setup gateway\PYGZdq{}}
+
+    \PYG{c+c1}{\PYGZsh{} setup router forward table}
+    \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}setup router forward table\PYGZdq{}}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}gateway\PYGZus{}route}\PYG{p}{(}\PYG{n}{r1}\PYG{p}{,} \PYG{n}{subnet3\PYGZus{}addr}\PYG{p}{,} \PYG{n}{r2\PYGZus{}eth0\PYGZus{}addr}\PYG{p}{[:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{3}\PYG{p}{],} \PYG{l+s+s2}{\PYGZdq{}r1\PYGZhy{}eth1\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}gateway\PYGZus{}route}\PYG{p}{(}\PYG{n}{r2}\PYG{p}{,} \PYG{n}{subnet1\PYGZus{}addr}\PYG{p}{,} \PYG{n}{r1\PYGZus{}eth1\PYGZus{}addr}\PYG{p}{[:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{3}\PYG{p}{],} \PYG{l+s+s2}{\PYGZdq{}r2\PYGZhy{}eth0\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}gateway\PYGZus{}route}\PYG{p}{(}\PYG{n}{r3}\PYG{p}{,} \PYG{n}{subnet3\PYGZus{}addr}\PYG{p}{,} \PYG{n}{r4\PYGZus{}eth0\PYGZus{}addr}\PYG{p}{[:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{3}\PYG{p}{],} \PYG{l+s+s2}{\PYGZdq{}r3\PYGZhy{}eth1\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{n}{set\PYGZus{}ipv6\PYGZus{}gateway\PYGZus{}route}\PYG{p}{(}\PYG{n}{r4}\PYG{p}{,} \PYG{n}{subnet1\PYGZus{}addr}\PYG{p}{,} \PYG{n}{r3\PYGZus{}eth1\PYGZus{}addr}\PYG{p}{[:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{3}\PYG{p}{],} \PYG{l+s+s2}{\PYGZdq{}r4\PYGZhy{}eth0\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}done setup router forward table\PYGZdq{}}
+
+    \PYG{c+c1}{\PYGZsh{} router forwarding}
+    \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}enable forwarding for routers\PYGZdq{}}
+    \PYG{n}{r1}\PYG{o}{.}\PYG{n}{cmd}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}sysctl \PYGZhy{}w net.ipv6.conf.all.forwarding=1\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{r2}\PYG{o}{.}\PYG{n}{cmd}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}sysctl \PYGZhy{}w net.ipv6.conf.all.forwarding=1\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{r3}\PYG{o}{.}\PYG{n}{cmd}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}sysctl \PYGZhy{}w net.ipv6.conf.all.forwarding=1\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{r4}\PYG{o}{.}\PYG{n}{cmd}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}sysctl \PYGZhy{}w net.ipv6.conf.all.forwarding=1\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}done enabling forwarding for routers\PYGZdq{}}
+
+    \PYG{k}{print} \PYG{n}{h1}\PYG{o}{.}\PYG{n}{cmd}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}ip \PYGZhy{}V\PYGZdq{}}\PYG{p}{)}
+    
+
+    \PYG{n}{net}\PYG{o}{.}\PYG{n}{start}\PYG{p}{()}
+    \PYG{n}{CLI}\PYG{p}{(}\PYG{n}{net}\PYG{p}{)}
+    \PYG{n}{net}\PYG{o}{.}\PYG{n}{stop}\PYG{p}{()}
+\end{Verbatim}

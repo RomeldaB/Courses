@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+mininet\PYGZgt{} h1 traceroute \PYG{l+m}{2001}:638:709:b::1
+traceroute to \PYG{l+m}{2001}:638:709:b::1 \PYG{o}{(}\PYG{l+m}{2001}:638:709:b::1\PYG{o}{)}, \PYG{l+m}{30} hops max, \PYG{l+m}{80} byte packets
+ \PYG{l+m}{1}  \PYG{l+m}{2001}:638:709:a::f \PYG{o}{(}\PYG{l+m}{2001}:638:709:a::f\PYG{o}{)}  \PYG{l+m}{0}.042 ms  \PYG{l+m}{0}.009 ms  \PYG{l+m}{0}.006 ms
+ \PYG{l+m}{2}  \PYG{l+m}{2001}:638:709:f::2 \PYG{o}{(}\PYG{l+m}{2001}:638:709:f::2\PYG{o}{)}  \PYG{l+m}{0}.052 ms  \PYG{l+m}{0}.011 ms  \PYG{l+m}{0}.008 ms
+ \PYG{l+m}{3}  \PYG{l+m}{2001}:638:709:b::1 \PYG{o}{(}\PYG{l+m}{2001}:638:709:b::1\PYG{o}{)}  \PYG{l+m}{0}.117 ms  \PYG{l+m}{0}.013 ms  \PYG{l+m}{0}.010 ms
+
+
+mininet\PYGZgt{} h2 traceroute \PYG{l+m}{2001}:638:709:a::1
+traceroute to \PYG{l+m}{2001}:638:709:a::1 \PYG{o}{(}\PYG{l+m}{2001}:638:709:a::1\PYG{o}{)}, \PYG{l+m}{30} hops max, \PYG{l+m}{80} byte packets
+ \PYG{l+m}{1}  \PYG{l+m}{2001}:638:709:b::e \PYG{o}{(}\PYG{l+m}{2001}:638:709:b::e\PYG{o}{)}  \PYG{l+m}{0}.033 ms  \PYG{l+m}{0}.008 ms  \PYG{l+m}{0}.007 ms
+ \PYG{l+m}{2}  \PYG{l+m}{2001}:638:709:e::1 \PYG{o}{(}\PYG{l+m}{2001}:638:709:e::1\PYG{o}{)}  \PYG{l+m}{0}.054 ms  \PYG{l+m}{0}.011 ms  \PYG{l+m}{0}.009 ms
+ \PYG{l+m}{3}  \PYG{l+m}{2001}:638:709:a::1 \PYG{o}{(}\PYG{l+m}{2001}:638:709:a::1\PYG{o}{)}  \PYG{l+m}{0}.025 ms  \PYG{l+m}{0}.010 ms  \PYG{l+m}{0}.010 ms
+\end{Verbatim}

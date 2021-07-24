@@ -1,0 +1,241 @@
+\documentclass{article}
+%% course name and homework number
+\newcommand{\coursename}{Computer Network}
+\newcommand{\hwnumber}{3}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage[]{caption}
+\graphicspath{ {img/} }
+\usepackage{titlesec}
+\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem} %% custom auto-index for enumerate environment
+\usepackage{url}
+\pagestyle{fancy}
+%basic page layout
+
+%draw finite state machine
+\usepackage{tikz}
+\newcommand{\Lcvy}{\mathcal{L}}
+%header and footer settings
+\lhead{\coursename \thinspace Assignment \hwnumber}
+\chead{Yiping Deng}
+\rhead{\today}
+
+\titlelabel{\thetitle\enspace}
+
+\begin{document}
+\title{\coursename \thinspace Assignment \hwnumber}
+\author{Yiping Deng}
+\maketitle
+\thispagestyle{fancy}
+
+%% start of homework
+\section*{Problem 3}
+\subsection*{a)}
+Using topology defined in Listing \ref{listing:p3a}, we can execute the ping and
+traceroute in mininet and verify the topology:
+\captionof{listing}{Mininet output for a)}
+\begin{minted}[linenos=true, frame=lines]{bash}
+mininet> h1 ping6 2001:638:709:b::1
+PING 2001:638:709:b::1(2001:638:709:b::1) 56 data bytes
+64 bytes from 2001:638:709:b::1: icmp_seq=1 ttl=62 time=0.125 ms
+64 bytes from 2001:638:709:b::1: icmp_seq=2 ttl=62 time=0.060 ms
+64 bytes from 2001:638:709:b::1: icmp_seq=3 ttl=62 time=0.060 ms
+^C
+--- 2001:638:709:b::1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2050ms
+rtt min/avg/max/mdev = 0.060/0.081/0.125/0.032 ms
+
+
+mininet> h2 ping6 2001:638:709:a::1
+PING 2001:638:709:a::1(2001:638:709:a::1) 56 data bytes
+64 bytes from 2001:638:709:a::1: icmp_seq=1 ttl=62 time=0.058 ms
+64 bytes from 2001:638:709:a::1: icmp_seq=2 ttl=62 time=0.062 ms
+64 bytes from 2001:638:709:a::1: icmp_seq=3 ttl=62 time=0.073 ms
+64 bytes from 2001:638:709:a::1: icmp_seq=4 ttl=62 time=0.064 ms
+64 bytes from 2001:638:709:a::1: icmp_seq=5 ttl=62 time=0.060 ms
+^C
+--- 2001:638:709:a::1 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4087ms
+rtt min/avg/max/mdev = 0.058/0.063/0.073/0.008 ms
+
+
+
+mininet> h1 traceroute 2001:638:709:b::1
+traceroute to 2001:638:709:b::1 (2001:638:709:b::1), 30 hops max, 80 byte packets
+ 1  2001:638:709:a::f (2001:638:709:a::f)  0.033 ms  0.018 ms  0.008 ms
+ 2  2001:638:709:f::2 (2001:638:709:f::2)  0.018 ms  0.009 ms  0.009 ms
+ 3  2001:638:709:b::1 (2001:638:709:b::1)  0.019 ms  0.010 ms  0.010 ms
+
+
+
+mininet> h2 traceroute 2001:638:709:a::1
+traceroute to 2001:638:709:a::1 (2001:638:709:a::1), 30 hops max, 80 byte packets
+ 1  2001:638:709:b::f (2001:638:709:b::f)  0.030 ms  0.007 ms  0.007 ms
+ 2  2001:638:709:f::1 (2001:638:709:f::1)  0.019 ms  0.009 ms  0.008 ms
+ 3  2001:638:709:a::1 (2001:638:709:a::1)  0.019 ms  0.010 ms  0.010 ms
+\end{minted}
+
+\captionof{listing}{Basic topology network}
+\label{listing:p3a}
+\inputminted[linenos=true, frame=lines]{python}{src/p3.a.py}
+
+\subsection*{b)}
+Using the modified Listing \ref{listing:p3b}, we can use the traceroute to show
+the asymetric path:
+\captionof{listing}{Traceroute of b)}
+\begin{minted}[linenos=true, frame=lines]{bash}
+mininet> h1 traceroute 2001:638:709:b::1
+traceroute to 2001:638:709:b::1 (2001:638:709:b::1), 30 hops max, 80 byte packets
+ 1  2001:638:709:a::f (2001:638:709:a::f)  0.042 ms  0.009 ms  0.006 ms
+ 2  2001:638:709:f::2 (2001:638:709:f::2)  0.052 ms  0.011 ms  0.008 ms
+ 3  2001:638:709:b::1 (2001:638:709:b::1)  0.117 ms  0.013 ms  0.010 ms
+
+
+mininet> h2 traceroute 2001:638:709:a::1
+traceroute to 2001:638:709:a::1 (2001:638:709:a::1), 30 hops max, 80 byte packets
+ 1  2001:638:709:b::e (2001:638:709:b::e)  0.033 ms  0.008 ms  0.007 ms
+ 2  2001:638:709:e::1 (2001:638:709:e::1)  0.054 ms  0.011 ms  0.009 ms
+ 3  2001:638:709:a::1 (2001:638:709:a::1)  0.025 ms  0.010 ms  0.010 ms
+\end{minted}
+\captionof{listing}{Asymetric route}
+\label{listing:p3b}
+\inputminted[linenos=true, frame=lines]{python}{src/p3.b.py}
+
+\subsection*{c)}
+We continue to run the mininet of Listing \ref{listing:p3b}, and we manually set
+the mtu of the interface on r1(a.k.a r1-eth1) and r2(a.k.a r2-eth0), and using
+ping6 to ping h2 from h1 with a package size of 1450.(default MTU is 1500 on h1)
+
+\captionof{listing}{mininet result of c)}
+\begin{minted}[linenos=true, frame=lines]{bash}
+mininet> r1 ifconfig r1-eth1 mtu 1400
+mininet> r2 ifconfig r2-eth0 mtu 1400
+mininet> h1 ifconfig
+h1-eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::f8fb:27ff:fe5a:ef33  prefixlen 64  scopeid 0x20<link>
+        inet6 2001:638:709:a::1  prefixlen 64  scopeid 0x0<global>
+        ether fa:fb:27:5a:ef:33  txqueuelen 1000  (Ethernet)
+        RX packets 71  bytes 7026 (7.0 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 45  bytes 4282 (4.2 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 12  bytes 1716 (1.7 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 12  bytes 1716 (1.7 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+mininet> h2 ifconfig
+h2-eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::c041:eeff:fe30:8074  prefixlen 64  scopeid 0x20<link>
+        inet6 2001:638:709:b::1  prefixlen 64  scopeid 0x0<global>
+        ether c2:41:ee:30:80:74  txqueuelen 1000  (Ethernet)
+        RX packets 74  bytes 7284 (7.2 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 47  bytes 4454 (4.4 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 12  bytes 1716 (1.7 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 12  bytes 1716 (1.7 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+mininet> h1 tcpdump -i h1-eth0 -s 65535 -w ping1450mtu.dump &
+tcpdump: h1 ping6 -M do -s 1450 2001:638:709:b::1
+listening on h1-eth0, link-type EN10MB (Ethernet), capture size 65535 bytes
+PING 2001:638:709:b::1(2001:638:709:b::1) 1450 data bytes
+From 2001:638:709:a::f icmp_seq=1 Packet too big: mtu=1400
+1458 bytes from 2001:638:709:b::1: icmp_seq=2 ttl=62 time=0.208 ms
+1458 bytes from 2001:638:709:b::1: icmp_seq=3 ttl=62 time=0.094 ms
+1458 bytes from 2001:638:709:b::1: icmp_seq=4 ttl=62 time=0.083 ms
+1458 bytes from 2001:638:709:b::1: icmp_seq=5 ttl=62 time=0.085 ms
+1458 bytes from 2001:638:709:b::1: icmp_seq=6 ttl=62 time=0.081 ms
+1458 bytes from 2001:638:709:b::1: icmp_seq=7 ttl=62 time=0.084 ms
+1458 bytes from 2001:638:709:b::1: icmp_seq=8 ttl=62 time=0.083 ms
+^C40 packets captured
+40 packets received by filter
+0 packets dropped by kernel
+\end{minted}
+From the command line output, we can see that there is a message indicating that
+the package is too big.
+
+We import the dump file `ping1450mtu.dump` into the wireshark. We can clearly
+observe that all the ping6 packets are using ICMPv6 protocol. The first echo
+ICMPv6 packet has 1450 bytes of data and the first echo
+request didn't receive the echo response.
+
+However, right after the first echo packet, h1(2001:638:709:a::1) receive
+a ICMPv6 packet from r1(2001:638:709:a::f)
+indicating that the packet is too big, with MTU of 1400.
+
+Afterwards, the echo ICMPv6 packet is transfered in 2 IPv6 packets, and we
+can see that the ICMPv6 packet has been fragmented into 2 packets.
+\subsection*{d)}
+We continue from previous problem, runing the tracepath:
+\captionof{listing}{Running tracepath}
+\begin{minted}[linenos=true, frame=lines]{bash}
+mininet> h1 tracepath -n 2001:638:709:b::1
+ 1?: [LOCALHOST]                        1.176ms pmtu 1500
+ 1:  2001:638:709:a::f                                     0.082ms
+ 1:  2001:638:709:a::f                                     0.016ms
+ 2:  2001:638:709:a::f                                     0.020ms pmtu 1400
+ 2:  2001:638:709:f::2                                     0.064ms
+ 3:  2001:638:709:b::1                                     0.150ms reached
+     Resume: pmtu 1400 hops 3 back 3 1?: [LOCALHOST]                        0.552ms pmtu 1500
+\end{minted}
+Ping can determine the MTU value because if the current MTU is bigger, the
+packet will be dropped in the route and an ICMPv6 will be forwarded back
+including the error message and the supported MTU value.
+
+Tracepath, just like traceroute\cite{slashroot.in}, using the TTL and the error ICMPv6 packet to
+determine the right MTU value. It set different TTL value so that the packet
+only perform limited hops. Using this technique and in combination of the error
+packet sent back when MTU has exceeded and dropped, we can determine the link
+that limit the MTU and the optimal MTU value.
+
+\subsection*{e)}
+No, we can do a experiment in the mininet
+\captionof{listing}{Path MTU cache experiment}
+\begin{minted}[linenos=true, frame=lines]{bash}
+mininet> h1 tracepath -n 2001:638:709:b::1
+ 1?: [LOCALHOST]                        0.016ms pmtu 1500
+ 1:  2001:638:709:a::f                                     0.048ms
+ 1:  2001:638:709:a::f                                     0.015ms
+ 2:  2001:638:709:a::f                                     0.015ms pmtu 1400
+ 2:  2001:638:709:f::2                                     0.026ms
+ 3:  2001:638:709:b::1                                     0.037ms reached
+     Resume: pmtu 1400 hops 3 back 3
+mininet> h1 tracepath -n 2001:638:709:b::1
+ 1?: [LOCALHOST]                        0.016ms pmtu 1400
+ 1:  2001:638:709:a::f                                     0.042ms
+ 1:  2001:638:709:a::f                                     0.016ms
+ 2:  2001:638:709:f::2                                     0.025ms
+ 3:  2001:638:709:b::1                                     0.033ms reached
+     Resume: pmtu 1400 hops 3 back 3
+\end{minted}
+As we can see, in the second tracepath, the pmtu value starts from 1400. Linux
+has obviously cached the path MTU. Such a cache is stored in the routing table
+entries. The host will not have routing table entries for every destination, but
+it can cache per-host route for every active destination\cite{RFC1191}.
+
+
+\bibliography{hw3.bib} 
+\bibliographystyle{plain}
+
+\end{document}

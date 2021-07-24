@@ -1,0 +1,106 @@
+#+TITLE: HW2 - Computer Network
+#+AUTHOR: Yiping Deng
+#+LATEX_HEADER: \usepackage{float}
+#+BIND: org-latex-prefer-user-labels t
+#+ATTR_LATEX: :environment tabularx :placement [H] :center t :width \linewidth
+
+* Problem 2.1
+** a)
+Root Bridge: *B1*
+
+Root Port:
+#+CAPTION: Root Port
+| Bridge | Port |
+|--------+------|
+| B2     | P2.2 |
+| B3     | P3.2 |
+| B4     | P4.2 |
+| B5     | P5.1 |
+| B6     | P6.1 |
+| B7     | P7.1 |
+| B8     | P8.2 |
+
+
+Designated Port:
+#+CAPTION: Designated Port
+| Segment | Port |
+|---------+------|
+| A       | P4.1 |
+| B       | P1.1 |
+| C       | P2.1 |
+| D       | P1.2 |
+| E       | P2.3 |
+| F       | P3.3 |
+| G       | P6.2 |
+| H       | P4.3 |
+| I       | P7.2 |
+| J       | P1.3 |
+| K       | P8.3 |
+| L       | P2.4 |
+
+
+Blocked Port:
+#+CAPTION: Blocked Port
+| Bridge | Port       |
+|--------+------------|
+| B3     | P3.1       |
+| B5     | P5.2, P5.3 |
+| B6     | P6.3       |
+| B8     | P8.1       |
+
+** b)
+Root Bridge: B2
+#+CAPTION: Root Port
+| Bridge | Port |
+|--------+------|
+| B3     | P3.2 |
+| B4     | P4.1 |
+| B5     | P5.1 |
+| B6     | P6.1 |
+| B7     | P7.1 |
+| B8     | P8.1 |
+
+#+CAPTION: Designated Port
+| Segment | Port |
+|---------+------|
+| A       | P3.1 |
+| B       | P4.2 |
+| C       | P2.1 |
+| D       | P2.2 |
+| E       | P2.3 |
+| F       | P3.3 |
+| G       | P6.2 |
+| H       | P4.3 |
+| I       | P5.3 |
+| J       | P8.2 |
+| K       | P6.2 |
+
+#+CAPTION: Blocked Port
+| Bridge | Port |
+|--------+------|
+| B5     | P5.2 |
+| B7     | P7.2 |
+| B8     | P8.3 |
+
+* Problem 2.2
+** a)
+- packets: 106280
+- bytes: 19689056
+
+- endpoint: 52837, 6826k bytes are broadcasted
+- broadcast percentage: 49.7149% by packets, 34.6690% by bytes
+** b) 
+- sending(source): 00:0c:30:80:d5:55
+- destination: 01:80:c2:00:00:00
+- how frequently are PDUs sent: 2 secands / packets
+- root bridge identifier: 24576 / 5 / 00:0c:30:80:d5:40, with bridge priority 24576, address: 00:0c:30:80:d5:40
+** c)
+Yes, apart from STP protocol, there are:
+- Microsoft Windows Browser Protocol
+- Cisco Discovery Protocol
+- Dynamic Trunk Protocol
+- IPX Routing Information Protocol
+- Service Advertisement Protocol
+- NetBIOS over IPX
+- Zone Information Protocol
+which uses LLC.

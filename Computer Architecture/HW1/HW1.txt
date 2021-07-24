@@ -1,0 +1,461 @@
+\documentclass[a4paper]{article}
+\usepackage[pdftex]{hyperref}
+\usepackage[latin1]{inputenc}
+\usepackage[english]{babel}
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{multicol}
+%\setlength{\columnseprule}{0pt}
+%\setlength{\columnsep}{1cm}
+% move the asterisk at the right position
+\lstset{basicstyle=\ttfamily,tabsize=4,literate={*}{${}^*{}$}1}
+%\lstset{language=C,basicstyle=\ttfamily}
+\usepackage{moreverb}
+\usepackage{palatino}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{color}
+
+%% pdflatex?
+\newif\ifpdf
+\ifx\pdfoutput\undefined
+\pdffalse % we are not running PDFLaTeX
+\else
+\pdfoutput=1 % we are running PDFLaTeX
+\pdftrue
+\fi
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\else
+\usepackage{graphicx}
+\fi
+\ifpdf
+\DeclareGraphicsExtensions{.pdf, .jpg}
+\else
+\DeclareGraphicsExtensions{.eps, .jpg}
+\fi
+
+\parindent=0cm
+\parskip=0cm
+
+\setlength{\columnseprule}{0.4pt}
+\addtolength{\columnsep}{2pt}
+
+\addtolength{\textheight}{5.5cm}
+\addtolength{\topmargin}{-26mm}
+\pagestyle{empty}
+
+%%
+%% Sheet setup
+%% 
+\newcommand{\coursename}{Computer Architecture and Programming Languages}
+\newcommand{\courseno}{CO20-320241}
+ 
+\newcommand{\sheettitle}{Homework}
+\newcommand{\mytitle}{}
+\newcommand{\mytoday}{{September 16}, 2019}
+
+% Current Assignment number
+\newcounter{assignmentno}
+\setcounter{assignmentno}{1}
+
+% Current Problem number, should always start at 1
+\newcounter{problemno}
+\setcounter{problemno}{1}
+
+%%
+%% problem and bonus environment
+%%
+\newcounter{probcalc}
+\newcommand{\problem}[2]{
+  \pagebreak[2]
+  \setcounter{probcalc}{#2}
+  ~\\
+  {\large \textbf{Problem \textcolor{black}{\arabic{assignmentno}}.\textcolor{black}{\arabic{problemno}}} \hspace{0.2cm}\textit{#1}} \refstepcounter{problemno}\vspace{2pt}\\}
+
+\newcommand{\bonus}[2]{
+  \pagebreak[2]
+  \setcounter{probcalc}{#2}
+  ~\\
+  {\large \textbf{Bonus Problem \textcolor{black}{\arabic{assignmentno}}.\textcolor{blue}{\arabic{problemno}}} \hspace{0.2cm}\textit{#1}} \refstepcounter{problemno}\vspace{2pt}\\}
+
+%% some counters  
+\newcommand{\assignment}{\arabic{assignmentno}}
+
+%% solution  
+\newcommand{\solution}{\pagebreak[2]{\bf Solution:}\\}
+
+%% Hyperref Setup
+\hypersetup{pdftitle={Homework \assignment},
+  pdfsubject={\coursename},
+  pdfauthor={},
+  pdfcreator={},
+  pdfkeywords={Computer Architecture and Programming Languages},
+  %  pdfpagemode={FullScreen},
+  %colorlinks=true,
+  %bookmarks=true,
+  %hyperindex=true,
+  bookmarksopen=false,
+  bookmarksnumbered=true,
+  breaklinks=true,
+  %urlcolor=darkblue
+  urlbordercolor={0 0 0.7}
+}
+
+\begin{document}
+\coursename \hfill Course: \courseno\\
+Jacobs University Bremen \hfill \mytoday\\
+{Romelda Blaceri}\hfill
+\vspace*{0.3cm}\\
+\begin{center}
+{\Large \sheettitle{} \textcolor{black}{\assignment}\\}
+\end{center}
+
+\problem{}{0}
+\solution
+\\
+{
+a) We perform the multiplication of each of the binary digits with 2 to the power of the specific position of each digit, as shown below:\\
+
+$\underset {4} {1} \underset {3} {0} \underset {2} {1} \underset {1} {0} \underset {0} {0} {_2} \rightarrow$
+$1 \cdot 2^4+ 0 \cdot 2^3 + 1 \cdot 2^2 +0 \cdot 2^1+0 \cdot 2^0= 16+4=20_{10}$ \\ 
+
+
+b)
+\\
+
+$\underset {7} {1} \underset {6} {1} \underset {5} {0} \underset {4} {1} \underset {3} {1} \underset {2} {0}  \underset {1} {1}  \underset {0} {1}{_2} \rightarrow
+$1 \cdot 2^7+ 1 \cdot 2^6 + 0 \cdot 2^5 +1 \cdot 2^4+1 \cdot 2^3+0 \cdot 2^2+1 \cdot 2^1+1 \cdot 2^0 = 128+64+16+8+2+1=219_{10}$ \\
+
+
+c)
+\\
+
+$001001001 {_2} \rightarrow
+0 \cdot 2^8+ 0 \cdot 2^7 + 1 \cdot 2^6 +0 \cdot 2^5+0 \cdot 2^4+1 \cdot 2^3+0 \cdot 2^2+0 \cdot 2^1 + 1 \cdot 2^0 =64+8+1=73_{10}$
+\\
+
+d)\\
+
+$111111111111_2 \rightarrow
+1 \cdot 2^{11} + 1 \cdot 2^{10} + 1 \cdot 2^9 +1 \cdot 2^8+1 \cdot 2^7+1 \cdot 2^6+ 1 \cdot 2^5+1 \cdot 2^4+ 1 \cdot 2^3 + 1 \cdot 2^3+1 \cdot  2^2 + 1 \cdot  2^1 + 1 \cdot  2^0= 4095_{10}$
+\\
+
+
+e) We follow the same idea as before: the digits of the octal will be multiplied with 8 to the power of the position of the digit. \\
+
+$\underset {4} {7} \underset{3} {5} \underset {2} {0} \underset {1} {7} \underset {0} {7} {_8} \rightarrow
+7 \cdot 8^4+5 \cdot 8^3+0 \cdot 8^2 + 7 \cdot 8^1 +7 \cdot 8^0 = 28672+2560+56+7  
+=31295_{10}$
+\\
+
+f) Same logic: the digits of the ternary number will be multiplied with 3 to the power of the position of the digit. \\
+
+$\underset {4} {1} \underset{3} {2} \underset {2} {1} \underset {1} {0} \underset {0} {1} {_3} \rightarrow
+1 \cdot 3^4+2 \cdot 3^3+1 \cdot 3^2 + 0 \cdot 3^1 +1 \cdot 3^0 = 81+54+9+1=145$
+\\
+
+
+g)\\
+
+$\underset {4} {2} \underset{3} {6} \underset {2} {6} \underset {1} {0} \underset {0} {1}{_7} \rightarrow
+2 \cdot 7^4+6 \cdot 7^3+6 \cdot 7^2 + 0 \cdot 7^1 +1 \cdot 7^0 = 4802+2058+294+1=7155$
+\\
+
+
+h)\\
+
+$\underset {5} {4} \underset {4} {3} \underset{3} {1} \underset {2} {0} \underset {1} {2} \underset {0} {1} {_5} \rightarrow
+4 \cdot 5^5+ 3 \cdot 5^4+1 \cdot 5^3+0 \cdot 5^2 + 2 \cdot 5^1 +1 \cdot 5^0 =12500+1875+125+10+1=14511$
+\\
+}
+
+
+\problem{}{0}
+\solution
+{
+a) There are many ways to perform the conversion into binary. One of them is getting the remainders of the repeated division by 2.
+
+$\\4272_{10}$
+\begin{multicols}{2}
+$4272/2 &=2136 \rightarrow 0\\$
+$2136/2 &=1068 \rightarrow 0\\$
+$1068/2 &=534 \rightarrow 0\\$
+$534/2 &=267 \rightarrow 0\\$
+$267/2 &=133 \rightarrow 1\\$
+$133/2 &=66 \rightarrow 1\\$
+$66/2 &=33 \rightarrow 0\\$
+$33/2 &=16 \rightarrow 1\\$
+$16/2 &=8\rightarrow 0\\$
+$8/2 &=4 \rightarrow 0\\$
+$4/2 &=2 \rightarrow 0\\$
+$2/2 &=1 \rightarrow 0\\$
+$1/2 &=0 \rightarrow 1$
+\end{multicols}
+
+The resulting binary number is:
+$1000010110000_2$
+
+\newpage
+
+b) We use the table from the lecture to convert the hexadecimal digits to a set of 4 digits binary representation.\\ 
+Our number is $CBA_{16}$. Looking from the table in the slides. \\
+
+\text{C} &\rightarrow 1100\\
+\text{B} &\rightarrow 1011\\
+\text{A} &\rightarrow 1010 
+
+As a result, the binary representation is: 1100 1011 1010_2
+\\
+
+c) Using the same approach as in point b, considering the table from the lecture, we have:\\ 
+
+\text{$B \rightarrow 11$ ;}\text{ $C \rightarrow 12$}\\
+
+\text{$B8C _{16} \rightarrow$} 11 \cdot 16^2+8 \cdot 16^1+12 \cdot 16^0 &=2816+128+1
+&=2956_{10}
+\\
+
+
+d)\text{ For $29D8_{16}$ the value for D is $13$.}\\
+
+$29D8_{16} \rightarrow$ 2 \cdot 16^3 + 9 \cdot 16^2+13 \cdot 16^1+8 \cdot 16^0 &=8192+2304+208+8
+&=10712_{10}
+\\
+
+e) Using the table from the lectures, we get:\\
+
+ $8CE_{16} \rightarrow  8CF_{16} \rightarrow  8D1_{16} \rightarrow 8D2_{16} \rightarrow  8D3_{16} \rightarrow  8D4_{16}$
+}
+
+\problem{}{0}
+\solution
+{
+\\
+a) Using BCD we can convert $732_{10}$ simply using the table from the lecture for each of the digits.
+\\
+
+$732_{10}: \quad 7 \rightarrow 0111_2$\quad $3 \rightarrow 0011_2 $ \quad $\rightarrow 0010_2$\\
+
+The result of this conversion is: $0111 0011 0010_2$
+\\
+
+b) Binary Coded Decimal numbers range from 0 to 9. Therefore, codes who represent values bigger then $9_{10}$ are invaid BCD codes. Specifically, we have:\\
+
+\hspace{155pt}\text{Decimal} \quad \qquad \quad \text{Binary}
+\begin{equation}
+\begin{split}
+10\\
+11\\
+12\\
+13\\
+14\\
+15\\
+\end{split}
+\qquad\Leftrightarrow\qquad
+\begin{split}
+1010\\
+1011\\
+1100\\
+1101\\
+1110\\
+1111\\
+\end{split}
+\end{equation}
+
+
+c) In order to convert from BCD to decimal, we divide the digits into groups of 4, each representing a digit in the decimal representation.\\
+
+
+\centerline{$1001 \; 0101 \; 0110_{BCD}$}\\
+
+\hspace{170pt}$\swarrow \qquad \downarrow \qquad \searrow$
+
+\centerline{$1001 \rightarrow 9_{10} \quad 0101 \rightarrow 5_{10} \quad 0110 \rightarrow 6_{10}$}\\
+
+\text{}
+\\
+\text{The result of this conversion is : $956_{10}$}
+\\
+
+d) Since M represents a value of 77 in the ASCII code, using same method as in probelm 2, its binary value is:\\
+\begin{multicols}{2}
+77/2 &=38 \rightarrow 1\\
+38/2 &=19 \rightarrow 0\\
+19/2 &=9 \rightarrow 1\\
+9/2 &=4 \rightarrow 1\\
+4/2 &=2 \rightarrow 0\\
+2/2 &=1 \rightarrow 0\\
+1/2 &=0 \rightarrow 1
+
+\hspace{40pt}$0100 \; 1101_2$\\
+\begin{tabular}{c}
+$\swarrow \qquad \searrow$\\
+\hspace{10pt}0100 \rightarrow 4   \qquad 1101  \rightarrow D&
+\\
+\end{tabular}\\
+
+&\text{The binary value is:} \; 01001101_2\\
+&\text{The hexadecimal value is:} \; 4D_{16}
+\\
+\end{multicols}
+\newpage
+
+e) Using same approach as before to convert $109_{10}$ into binary:\\
+\begin{multicols}{2}
+109/2 &=54 \rightarrow 1\\
+54/2 &=27 \rightarrow 0\\
+27/2 &=13 \rightarrow 1\\
+13/2 &=6 \rightarrow 1\\
+6/2 &=3 \rightarrow 0\\
+3/2 &=1 \rightarrow 1\\
+1/2 &=0 \rightarrow 1
+
+\hspace{40pt}$0110 \; 1101_2$\\
+\begin{tabular}{c}
+\hspace{10pt}$\swarrow \qquad \searrow$\\
+\hspace{5pt}0110 \rightarrow 6 \qquad 1101  \rightarrow D\\
+\end{tabular}\\
+\\
+
+&\text{The binary value is:} \; 01101101_2\\
+&\text{The hexadecimal value is:} \; 6D_{16}
+\\
+\end{multicols}
+}
+
+\problem{}{0}
+\solution
+{
+a) The NOT function does not satisfy this requirement as when a NOT gate's input is low the output is high and vice versa. For the other function, we check the respective truth tables for AND and OR gates:
+
+\begin{multicols}{2}
+
+\begin{center}
+OR Table\\
+ \begin{tabular}{|c| c| c|}
+ \hline
+ Input & Input & Output \\
+ \hline\hline
+ 0 & 0 & 0 \\ 
+ \hline
+ 0 & 1 & 1  \\
+ \hline
+ 1 & 0 & 1  \\
+ \hline
+ 1 & 1 & 1 \\
+ \hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+AND Table\\
+\begin{tabular}{|c| c| c|} 
+ \hline
+ Input & Input & Output \\
+ \hline\hline
+ 0 & 0 & 0 \\ 
+ \hline
+ 0 & 1 & 0  \\
+ \hline
+ 1 & 0 & 0  \\
+ \hline
+ 1 & 1 & 1 \\
+ \hline
+\end{tabular}
+\end{center}
+\end{multicols}
+\vspace{4mm}
+As we can see, the AND function has 3 cases where at least 1 of inputs is low the output is still low. On the other side, there is 1 case for the OR function when this requirement is fulfilled. Therefore, both functions can provide a low output in response to one or more low inputs, but the AND function is the one that always provides a low input if one or more of the inputs is low. (correct answer is (iii)AND )
+\\
+
+b) Considering the truth tables in the previous question, we can see that both OR or AND functions have 1 respective case when the requirement is met (first rows of the tables). But the OR function is the one that has a low output only when all the inputs are low. (correct answer is (i)OR ) 
+}
+\vspace{7mm}
+\begin{multicols}{2}
+\problem{}{0}
+\solution
+{
+
+\begin{center}
+AND Gate Table\\
+\begin{tabular}{|c| c| c|c|} 
+ \hline
+ A & B & C & Output \\
+ \hline\hline
+ 0 & 0 & 0 & 0 \\ 
+ \hline
+ 0 & 0 & 1 & 0 \\
+ \hline
+ 0 & 1 & 0 & 0  \\
+ \hline
+ 0 & 1 & 1 & 0 \\
+ \hline
+ 1 & 0 &0 & 0 \\
+ \hline
+1 & 0 &1 & 0 \\
+ \hline
+1 & 1 &0 & 0 \\
+ \hline
+1 & 1 &1 & 1 \\
+ \hline
+\end{tabular}
+\end{center}
+\\
+}
+\vspace{30mm}
+\problem{}{0}
+\solution
+{
+\begin{center}
+OR Gate Table\\
+\begin{tabular}{|c| c| c|c|c|} 
+ \hline
+ A & B & C & D & Output \\
+ \hline\hline
+ 0 & 0 & 0 & 0 & 0 \\ 
+ \hline
+ 0 & 0 & 0 & 1 & 1\\
+ \hline
+ 0 & 1 & 0 & 0 & 1  \\
+ \hline
+ 0 & 1 & 0 & 1 & 1 \\
+ \hline
+ 0 & 0 & 1 & 0 & 1 \\
+ \hline
+ 0 & 0 & 1 & 1 & 1 \\
+ \hline
+ 0 & 1 & 1 & 0 & 1 \\
+ \hline
+ 0 & 1 & 1 & 1 & 1 \\
+ \hline
+1 & 0 & 0 & 0 & 1 \\
+ \hline
+1 & 0 & 0 & 1 & 1 \\
+ \hline
+1& 1 & 0 & 0 & 1\\
+ \hline
+1& 1 & 0 & 1 & 1\\
+ \hline
+1& 0 & 1 & 0 & 1\\
+ \hline
+1& 0 & 1 & 1 & 1\\
+ \hline
+1& 1 & 1 & 0 & 1\\
+\hline
+ 1 & 1 & 1 & 1 & 1 \\
+ \hline
+\end{tabular}
+\end{center}
+}
+\end{multicols}
+
+\end{document}
+

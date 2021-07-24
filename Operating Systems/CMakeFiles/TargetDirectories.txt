@@ -1,0 +1,6 @@
+/home/romelda/Desktop/Operating Systems/CMakeFiles/rebuild_cache.dir
+/home/romelda/Desktop/Operating Systems/CMakeFiles/upper.dir
+/home/romelda/Desktop/Operating Systems/CMakeFiles/cat++.dir
+/home/romelda/Desktop/Operating Systems/CMakeFiles/rot13.dir
+/home/romelda/Desktop/Operating Systems/CMakeFiles/lower.dir
+/home/romelda/Desktop/Operating Systems/CMakeFiles/edit_cache.dir

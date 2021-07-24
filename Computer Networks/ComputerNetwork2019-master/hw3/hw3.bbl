@@ -1,0 +1,12 @@
+\begin{thebibliography}{1}
+
+\bibitem{slashroot.in}
+How does traceroute work and example's of using traceroute command.
+
+\bibitem{RFC1191}
+Jeffrey Mogul and Steve Deering.
+\newblock Path mtu discovery.
+\newblock RFC 1191, RFC Editor, November 1990.
+\newblock \url{http://www.rfc-editor.org/rfc/rfc1191.txt}.
+
+\end{thebibliography}

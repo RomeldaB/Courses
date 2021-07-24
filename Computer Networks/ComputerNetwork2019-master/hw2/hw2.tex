@@ -1,0 +1,177 @@
+% Created 2019-03-08 Fri 01:05
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{float}
+\author{Yiping Deng}
+\date{\today}
+\title{HW2 - Computer Network}
+\hypersetup{
+ pdfauthor={Yiping Deng},
+ pdftitle={HW2 - Computer Network},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.1 (Org mode 9.2)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Problem 2.1}
+\label{sec:org03104e4}
+\subsection{a)}
+\label{sec:orgafe573d}
+Root Bridge: \textbf{B1}
+
+Root Port:
+\begin{table}[htbp]
+\caption{Root Port}
+\centering
+\begin{tabular}{ll}
+Bridge & Port\\
+\hline
+B2 & P2.2\\
+B3 & P3.2\\
+B4 & P4.2\\
+B5 & P5.1\\
+B6 & P6.1\\
+B7 & P7.1\\
+B8 & P8.2\\
+\end{tabular}
+\end{table}
+
+
+Designated Port:
+\begin{table}[htbp]
+\caption{Designated Port}
+\centering
+\begin{tabular}{ll}
+Segment & Port\\
+\hline
+A & P4.1\\
+B & P1.1\\
+C & P2.1\\
+D & P1.2\\
+E & P2.3\\
+F & P3.3\\
+G & P6.2\\
+H & P4.3\\
+I & P7.2\\
+J & P1.3\\
+K & P8.3\\
+L & P2.4\\
+\end{tabular}
+\end{table}
+
+
+Blocked Port:
+\begin{table}[htbp]
+\caption{Blocked Port}
+\centering
+\begin{tabular}{ll}
+Bridge & Port\\
+\hline
+B3 & P3.1\\
+B5 & P5.2, P5.3\\
+B6 & P6.3\\
+B8 & P8.1\\
+\end{tabular}
+\end{table}
+
+\subsection{b)}
+\label{sec:orge85250d}
+Root Bridge: B2
+\begin{table}[htbp]
+\caption{Root Port}
+\centering
+\begin{tabular}{ll}
+Bridge & Port\\
+\hline
+B3 & P3.2\\
+B4 & P4.1\\
+B5 & P5.1\\
+B6 & P6.1\\
+B7 & P7.1\\
+B8 & P8.1\\
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\caption{Designated Port}
+\centering
+\begin{tabular}{ll}
+Segment & Port\\
+\hline
+A & P3.1\\
+B & P4.2\\
+C & P2.1\\
+D & P2.2\\
+E & P2.3\\
+F & P3.3\\
+G & P6.2\\
+H & P4.3\\
+I & P5.3\\
+J & P8.2\\
+K & P6.2\\
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\caption{Blocked Port}
+\centering
+\begin{tabular}{ll}
+Bridge & Port\\
+\hline
+B5 & P5.2\\
+B7 & P7.2\\
+B8 & P8.3\\
+\end{tabular}
+\end{table}
+
+\section{Problem 2.2}
+\label{sec:org0fba1e3}
+\subsection{a)}
+\label{sec:org85c2a87}
+\begin{itemize}
+\item packets: 106280
+\item bytes: 19689056
+
+\item endpoint: 52837, 6826k bytes are broadcasted
+\item broadcast percentage: 49.7149\% by packets, 34.6690\% by bytes
+\end{itemize}
+\subsection{b)}
+\label{sec:orgaf0a29b}
+\begin{itemize}
+\item sending(source): 00:0c:30:80:d5:55
+\item destination: 01:80:c2:00:00:00
+\item how frequently are PDUs sent: 2 secands / packets
+\item root bridge identifier: 24576 / 5 / 00:0c:30:80:d5:40, with bridge priority 24576, address: 00:0c:30:80:d5:40
+\end{itemize}
+\subsection{c)}
+\label{sec:orga2442ee}
+Yes, apart from STP protocol, there are:
+\begin{itemize}
+\item Microsoft Windows Browser Protocol
+\item Cisco Discovery Protocol
+\item Dynamic Trunk Protocol
+\item IPX Routing Information Protocol
+\item Service Advertisement Protocol
+\item NetBIOS over IPX
+\item Zone Information Protocol
+\end{itemize}
+which uses LLC.
+\end{document}

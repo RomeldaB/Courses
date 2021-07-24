@@ -1,0 +1,143 @@
+\documentclass[a4paper]{article}
+\usepackage[pdftex]{hyperref}
+\usepackage[latin1]{inputenc}
+\usepackage[english]{babel}
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{graphics}
+% move the asterisk at the right position
+\lstset{basicstyle=\ttfamily,tabsize=4,literate={*}{${}^*{}$}1}
+%\lstset{language=C,basicstyle=\ttfamily}
+\usepackage{moreverb}
+\usepackage{palatino}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{color}
+
+%% pdflatex?
+\newif\ifpdf
+\ifx\pdfoutput\undefined
+\pdffalse % we are not running PDFLaTeX
+\else
+\pdfoutput=1 % we are running PDFLaTeX
+\pdftrue
+\fi
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\else
+\usepackage{graphicx}
+\fi
+\ifpdf
+\DeclareGraphicsExtensions{.pdf, .jpg}
+\else
+\DeclareGraphicsExtensions{.eps, .jpg}
+\fi
+
+\parindent=0cm
+\parskip=0cm
+
+\setlength{\columnseprule}{0.4pt}
+\addtolength{\columnsep}{2pt}
+
+\addtolength{\textheight}{5.5cm}
+\addtolength{\topmargin}{-26mm}
+\pagestyle{empty}
+
+%%
+%% Sheet setup
+%% 
+\newcommand{\coursename}{Computer Networks}
+\newcommand{\courseno}{CO20-320301}
+ 
+\newcommand{\sheettitle}{Homework}
+\newcommand{\mytitle}{}
+\newcommand{\mytoday}{March 17, 2020}
+
+% Current Assignment number
+\newcounter{assignmentno}
+\setcounter{assignmentno}{2}
+
+% Current Problem number, should always start at 1
+\newcounter{problemno}
+\setcounter{problemno}{1}
+
+%%
+%% problem and bonus environment
+%%
+\newcounter{probcalc}
+\newcommand{\problem}[2]{
+  \pagebreak[2]
+  \setcounter{probcalc}{#2}
+  ~\\
+  {\large \textbf{Problem \textcolor{black}{\arabic{assignmentno}}.\textcolor{black}{\arabic{problemno}}} \hspace{0.2cm}\textit{#1}} \refstepcounter{problemno}\vspace{2pt}\\}
+
+\newcommand{\bonus}[2]{
+  \pagebreak[2]
+  \setcounter{probcalc}{#2}
+  ~\\
+  {\large \textbf{Bonus Problem \textcolor{black}{\arabic{assignmentno}}.\textcolor{black}{\arabic{problemno}}} \hspace{0.2cm}\textit{#1}} \refstepcounter{problemno}\vspace{2pt}\\}
+
+%% some counters  
+\newcommand{\assignment}{\arabic{assignmentno}}
+
+%% solution  
+\newcommand{\solution}{\pagebreak[2]{\bf Solution:}\\}
+
+%% Hyperref Setup
+\hypersetup{pdftitle={Homework \assignment},
+  pdfsubject={\coursename},
+  pdfauthor={},
+  pdfcreator={},
+  pdfkeywords={Computer Architecture and Programming Languages},
+  %  pdfpagemode={FullScreen},
+  %colorlinks=true,
+  %bookmarks=true,
+  %hyperindex=true,
+  bookmarksopen=false,
+  bookmarksnumbered=true,
+  breaklinks=true,
+  %urlcolor=darkblue
+  urlbordercolor={0 0 0.7}
+}
+
+\begin{document}
+\coursename \hfill Course: \courseno\\
+Jacobs University Bremen \hfill \mytoday\\
+{Jovan Shandro}\hfill
+\vspace*{0.3cm}\\
+\begin{center}
+{\Large \sheettitle{} \textcolor{black}{\assignment}\\}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%% Problem 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\problem{}{0}
+\solution
+\textbf{a)} \\
+\includegraphics[width=\linewidth]{network.png}
+\textcolor{white}{ }\quad \textit{i)} Since it is given that all bridges have the same priority, and the costs of all network segments is the same, we select as the root bridge the one with the lowest ID, namely B1. Since switches B4, B2, and B8 are directly connected with the root switch, P4.2, P2.2, and P8.2 are root ports. Since B7 has the shortest path to connect to the root via B4, P7.1 is also a root port. Using the same logic as above, the other root ports are: P3.2(B3 connects via B2 as it has lower ID than B4), P5.1, and P6.1.\\
+\textcolor{white}{ }\quad \textit{ii)} Since all ports facing root ports are called designated ports, we have that P1.1, P1.2, P1.3, P2.1, P2.3, P3.3, P4.3. In the remaining segments (L, A, G, I, K) the port on the side of the switch with the lowest ID will be a designated port, so the other designated ports are P2.4, P3.1, P5.2, P5.3, P6.3. \\
+\textcolor{white}{ }\quad \textit{iii)} All the left ports will be Blocked ports so the blocked ports are P4.1, P6.2, P7.2, P8.1, P8.3.
+ \newline
+
+\textbf{b}) Assuming bridge B1 fails.\\
+\textcolor{white}{ }\quad \textit{i)} With the same logic as above, the root switch will be B2 and the and the root ports will now be P3.2, P4.1, P5.1 P6.1, P7.1, P8.1. \\
+\textcolor{white}{ }\quad \textit{ii)} Again using the same logic as in point a) we get the designated ports: P2.1, P2.3, P2.4, P3.1, P3.3, P4.3, P5.2, P5.3, P6.3.\\
+\textcolor{white}{ }\quad \textit{iii)} All the remaining ports will be blocked, so the blocked ports are: P5.3, P6.2, and P8.3.
+\\
+%%%%%%%%%%%%%%%%%%%%% Problem 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\problem{}{0}
+\solution
+\textbf{a})\\ \\
+\textbf{b})\\ \\
+\textbf{c})\\ \\
+\newline
+
+\end{document}
+

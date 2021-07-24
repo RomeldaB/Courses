@@ -1,0 +1,3 @@
+all: ; gcc -pthread -o main main.c coins.c coins.h ; ./main
+
+delete: ; rm -f main 

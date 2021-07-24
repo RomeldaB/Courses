@@ -1,0 +1,733 @@
+* An operating system (OS) is system software that manages computer hardware and software resources and provides common services for computer programs.
+
+---------------------------------------------------------------------
+
+* Library calls vs System calls:
+
+Library call: 
+	- A request made by the program to acces a function defined in a programming library.
+	- There is no mode switching.
+	- Portable: an application using standard library functions will run on all systems.
+	- A library function is linked to the user program and executes in user space.
+	- A library function execution time is counted in user level time, so library system calls are faster than system calls.
+	- Library functions can be debugged easily using a debugger.
+
+System call:
+	- A request by the program to the kernel to enter kernel mode to access a resource.
+	- Change the execution mode of the program from user mode to kernel mode.
+	- Not portable: an application relying on the corresponding system call may not run on every system as system call interface may vary from system to system.
+	- A system call is not linked to a user program and executes in kernel space.
+	- A system call execution time is counted as a part of system time (slower than lib calls).
+	- System calls cannot be debugged as they are executed by the kernel.
+
+---------------------------------------------------------------------
+
+* Static vs Dynamic linking:
+
+Linking is the process of bringing external programs together required by the one we write for its successful execution. Static and dynamic linking are two processes of collecting and combining multiple object files in order to create a single executable.
+
+Static linking:
+	- The process of copying all library modules used in the program into the final executable image.
+	- When the program is loaded, the operating system places into memory a single file that contains the executable code and data. This statically linked file includes both the calling program and the called program.
+	- Is performed by programs called linkers as the last step in compiling a program.
+	- Statically linked files are significantly larger in size because external programs are built into the executable files.
+	- Static linking takes constant load time.
+	- If any of the external programs has changed then they have to be recompiled and re-linked again else the changes won't reflect in existing executable file.
+	- Programs that use statically-linked libraries are usually faster than those that use shared libraries.
+	- No compatibility issue (all code is contained in a single executable module).
+
+Dynamic linking:
+	- The names of the external libraries (shared libraries) are placed in the final executable file while the actual linking takes place at run time when both executable file and libraries are placed in the memory. 
+	- Dynamic linking lets several programs use a single copy of an executable module.
+	- It is performed at run time by the operating system.
+	- In DL, only one copy of shared library is kept in memory, which significantly reduces the size of executable programs, thereby saving memory and disk space (smaller in size than SL).
+	- Individual shared modules can be updated and recompiled. This is one of the greatest advantages dynamic linking offers.
+	- In dynamic linking load time might be reduced if the shared library code is already present in memory. Anyway, programs that use shared libraries are usually slower than those that use statically-linked libraries.
+	- Dependent on having a compatible library (if a library is changed, applications might have to be reworked to be made compatible with the new version of the library, i.e. if a library is removed from the system, programs using that library will no longer work).
+
+---------------------------------------------------------------------
+
+* Printing "Hello World"
+
+- check the return code of puts() and that we flush() the buffered output stream manually to check whether writing to stdout actually worked
+
+n = puts(msg);
+if (n == EOF) {
+	return EXIT_FAILURE;
+}
+
+if (fflush(stdout) == EOF) {
+	return EXIT_FAILURE;
+}
+
+- system call write
+
+ssize_t n = write(STDOUT_FILENO, msg, sizeof(msg));
+if (n == -1 || n != sizeof(msg)) {
+	return EXIT_FAILURE;
+}
+
+- invoking write() system call by using the syscall library function
+
+ssize_t n = syscall(SYS_write, 1, msg, sizeof(msg));
+if (n == -1 || n != sizeof(msg)) {
+	return EXIT_FAILURE;
+}
+
+---------------------------------------------------------------------
+
+* Interrupt handling:
+
+void handler_a(void)
+{
+	save_cpu_registers();
+	save_stack_frame();
+	interrupt_a_handling_logic();
+	restore_stack_frame();
+	restore_cpu_registers();
+}
+
+---------------------------------------------------------------------
+
+* Memory segments:
+
+- text -> machine instructions of the program
+- data -> static variables and constants, may be further devided into initialized and uninitialized data
+- heap -> dynamically allocated data structures
+- stack -> automatically allocated local variables, management of function calls (parameters, results, return addresses)
+
+// Code at memory_segments.c
+
+---------------------------------------------------------------------
+
+* Caching is a general technique to speed up memory access by introducing smaller and faster memories which keep a copy of frequently / soon needed data.
+
+- Spatial locality: Nearby memory cells are likely to be accessed soon
+- Temporal locality: Recently addressed memory cells are likely to be accessed again soon
+
+---------------------------------------------------------------------
+
+* A process is an instance of a program under execution.
+A process uses/owns resources (e.g., CPU, memory, files) and is characterized by
+the following:
+1. A sequence of machine instructions which determines the behavior of the running
+program (control flow)
+2. The current state of the process given by the content of the processor’s registers,
+the contents of the stack, and the contents of the heap (internal state)
+3. The state of other resources (e.g., open files or network connections, timer, devices)
+used by the running program (external state)
+
+* A process has a single thread of control executing a sequence of machine instructions.
+
+PCB - Process Control Block
+
+---------------------------------------------------------------------
+
+* Process creation:
+
+- The fork() system call creates a new child process (pid_t fork(void);)
+	• which is an exact copy of the parent process,
+	• except that the result of the system call differs
+- The exec() system call replaces the current process image with a new process image.
+(int execve(const char *filename, char *const argv [], char *const envp[]);
+execl, execlp, execle, execv, execvp())
+- Processes can terminate themself by calling exit(). (void exit(int status); void _exit(int status);)
+- The wait() system call allows processes to wait for the termination of a child process. 
+(pid_t wait(int *status); pid_t waitpid(pid_t pid, int *status, int options); 
+pid_t wait3(int *status, int options, struct rusage *rusage); 
+pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);)
+
+// Code at processes.c
+
+---------------------------------------------------------------------
+
+* Threads are individual control flows, typically within a process (or within a kernel) - A thread is the smallest sequence of programmed instructions that can be managed independently (by
+the operating system kernel).
+
+- Every thread has its own private stack (so that function calls can be managed for each thread separately)
+- Multiple threads share the same address space and other resources
+	• Fast communication between threads
+	• Fast context switching between threads
+	• Often used for very scalable server programs
+	• Multiple CPUs can be used by a single process
+	• Threads require synchronization (see later)
+
+// Code at thread.c -> gcc -pthread -o t threads.c 
+
+pthread_create(&tids[i], NULL, work, argv[i]); 
+(void) pthread_join(tids[i], NULL);
+
+---------------------------------------------------------------------
+
+* Linux internally treats processes and threads as tasks. Tasks are in one of the states running, interruptible, uninterruptible, stopped, zombie, or dead.
+* clone() system call is used to create processes and threads
+
+---------------------------------------------------------------------
+
+* A race condition exists if the result produced by concurrent processes (or threads), which access and manipulate shared resources (variables), depends unexpectedly on the order of the execution of the processes (or threads)
+
+---------------------------------------------------------------------
+
+* A critical section is a segment of code that can only be executed by one process at a time. The critical-section problem is to design a protocol that the processes can use to cooperate: 
+A solution must satisfy the following requirements:
+1. Mutual Exclusion: No two processes may be simultaneously inside the same critical
+section.
+2. Progress: No process outside its critical sections may block other processes.
+3. Bounded-Waiting : No process should have to wait forever to enter its critical
+section.
+
+* The simplest solution is to disable all interrupts during the critical section so that nothing can interrupt the critical section:
+	disable_interrupts();
+	critical_section();
+	enable_interrupts();
+Can usually not be used in user-space; Problematic on systems with multiple processors; Fails if interrupts are needed in the critical section; Very efficient and sometimes used in some cases.
+
+* Strict alternation:
+Lets assume just two processes which share a variable called turn which holds the values 0 and 1:
+/* process 0 */                           /* process 1 */
+uncritical_section();                     uncritical_section();
+while (turn != 0) sleep(1);               while (turn != 1) sleep(1);
+criticial_section();                      critical_section();
+turn = 1;                                 turn = 0;
+uncritical_section();                     uncritical_section();
+
+Ensures mutual exclusion; Can be extended to handle alternation between N processes; Does not satisfy the progress requirement since the solution enforces strict alternation.
+
+* Peterson's algorithm:
+Lets assume two processes i and j sharing a variable turn (which holds a process identifier) and a boolean array interested, indexed by process identifiers
+	uncritical_section();
+	interested[i] = true;
+	turn = j;
+	while (interested[j] && turn == j) sleep(1);
+	criticial_section();
+	interested[i] = false;
+	uncritical_section();
+
+Modifications of turn (and interested) are protected by a loop to handle concurrency issues; Algorithm satisfies mutual exclusion, progress and bounded-waiting requirements and can be extended to handle N processes.
+
+---------------------------------------------------------------------
+
+* So called spin-locks are locks which cause the processor to spin while waiting for
+the lock.
+* Spin-locks are often used to synchronize multi-processor systems with shared
+memory.
+* Spin-locks require atomic test-and-set-lock machine instructions on shared memory
+cells
+
+---------------------------------------------------------------------
+
+* A semaphore is a protected integer variable which can only be manipulated by the atomic operations up() and down().
+High-level definition of the behavior of semaphores:
+	down(s) {
+		s = s - 1;
+		if (s < 0) queue_this_process_and_block();
+	}
+	up(s) {
+		s = s + 1;
+		if (s <= 0) dequeue_and_wakeup_process();
+	}
+
+Critical sections with semaphores:
+
+		semaphore mutex = 1;			
+uncritical_section();		uncritical_section();
+down(&mutex);			down(&mutex);
+critical_section();		critical_section();
+up(&mutex);			up(&mutex);
+uncritical_section();		uncritical_section();
+
+---------------------------------------------------------------------
+
+Bounded Buffer with Semaphores:
+
+const int N;
+shared item_t buffer[N];
+semaphore mutex = 1, empty = N, full = 0;
+
+void producer() {			void consumer() {
+	produce(&item);				down(&full);
+	down(&empty);				down(&mutex);
+	down(&mutex);				item = buffer[out];
+	buffer[in] = item;			out = (out + 1) % N;
+	in = (in + 1) % N;			up(&mutex);
+	up(&mutex);				up(&empty);
+	up(&full); }				consume(item); }
+
+- Semaphore mutex protects the critical section
+- Semaphore empty counts empty buffer space
+- Semaphore full counts used buffer space
+
+---------------------------------------------------------------------
+
+Readers/Writers with semaphores:
+
+shared object data;
+shared int readcount = 0;
+semaphore mutex = 1, writer = 1;
+
+void reader()					void writer()
+{						{
+	down(&mutex);					down(&writer);
+	readcount = readcount + 1;			write_shared_object(&data);
+	if (readcount == 1) down(&writer);		up(&writer);
+	up(&mutex);				}
+	read_shared_object(&data);
+	down(&mutex);
+	readcount = readcount - 1;
+	if (readcount == 0) up(&writer);
+	up(&mutex);
+}
+
+---------------------------------------------------------------------
+
+Dining Philosophers with semaphores:
+
+const int N; // number of philosophers */
+shared int state[N]; // thinking (default), hungry or eating */
+semaphore mutex = 1; // mutex semaphore to protect state */
+semaphore s[N] = 0; // semaphore for each philosopher */
+void philosopher(int i)
+{
+	while (true) {
+		think(i);
+		take_forks(i);
+		eat(i);
+		put_forks(i);
+	}
+}
+
+void test(int i)
+{
+	if (state[i] == hungry && state[(i-1)%N] != eating && state[(i+1)%N] != eating) 
+	{
+	state[i] = eating;
+	up(&s[i]);
+	}
+}
+
+void take_forks(int i)
+{
+	down(&mutex);
+	state[i] = hungry;
+	test(i);
+	up(&mutex);
+	down(&s[i]);
+}
+
+void put_forks(int i)
+{
+	down(&mutex);
+	state[i] = thinking;
+	test((i-1)%N);
+	test((i+1)%N);
+	up(&mutex);
+}
+
+---------------------------------------------------------------------
+
+* Binary semaphores are semaphores that only take the two values 0 and 1.
+* Counting semaphores can be implemented by means of binary semaphores:
+
+shared int c;
+binary_semaphore mutex = 1, wait = 0, barrier = 1;
+
+void down()
+{
+	down(&barrier);
+	down(&mutex);
+	c = c - 1;
+	if (c < 0) {
+		up(&mutex);
+		down(&wait);
+	} else {
+		up(&mutex);
+	}
+	up(&barrier);
+}
+
+void up()
+{
+	down(&mutex);
+	c = c + 1;
+	if (c <= 0) {
+		up(&wait);
+	}
+	up(&mutex);
+}
+
+---------------------------------------------------------------------
+
+* A critical section may only be executed by a single thread.
+
+semaphore_t s = 1;
+thread()
+{
+	/* do something */
+	down(&s);
+	/* critical section */
+	up(&s);
+	/* do something */
+}
+
+* A section may be executed concurrently with a certain fixed limit of N concurrent threads. 
+(This is a generalization of the mutual exclusion pattern, which is essentially multiplex with N = 1.)
+
+semaphore_t s = N;
+thread()
+{
+	/* do something */
+	down(&s);
+	/* multiplex section */
+	up(&s);
+	/* do something */
+}
+
+---------------------------------------------------------------------
+
+* Semaphore Threading - Signaling
+A thread waits until some other thread signals a certain condition.
+
+semaphore_t s = 0;
+waiting_thread()
+{
+	/* do something */
+	down(&s);
+	/* do something */
+}
+
+signaling_thread()
+{
+	/* do something */
+	up(&s);
+	/* do something */
+}
+
+---------------------------------------------------------------------
+
+* Semaphore Pattern: Rendezvous
+Two threads wait until they both have reached a certain state (the rendezvous point) and afterwards they proceed independently again. 
+(This can be seen as using the signaling pattern twice.)
+
+semaphore_t s1 = 0, s2 = 0;
+thread_A()
+{
+	/* do something */
+	up(&s2);
+	down(&s1);
+	/* do something */
+}
+
+thread_B()
+{
+	/* do something */
+	up(&s1);
+	down(&s2);
+	/* do something */
+}
+
+---------------------------------------------------------------------
+
+* Semaphore Pattern: Simple Barrier
+Generalization of the rendezvous pattern to N threads. First a simple barrier solution using counting semaphores.
+
+shared int count = 0;
+semaphore_t mutex = 1, turnstile = 0;
+thread()
+{
+	/* do something */
+	down(&mutex);
+	count++;
+	if (count == N) {
+		for (int j = 0; j < N; j++) {
+			up(&turnstile); /* let N threads pass through the turnstile */
+		}
+		count = 0;
+	}
+	up(&mutex);
+	down(&turnstile); /* block until opened by the Nth thread */
+	/* do something */
+}
+
+---------------------------------------------------------------------
+
+* Semaphore Pattern: Double Barrier
+Next a solution allowing to do something while passing through the barrier, which is sometimes needed.
+
+shared int count = 0;
+semaphore_t mutex = 1, turnstile1 = 0, turnstile2 = 1;
+{
+	/* do something */
+	down(&mutex);
+	count++;
+	if (count == N) {
+		down(&turnstile2); /* close turnstile2 (which was left open) */
+		up(&turnstile1);   /* open turnstile1 for one thread */
+	}
+	up(&mutex);
+	down(&turnstile1);	/* block until opened by the last thread */
+	up(&turnstile1);	/* every thread lets another thread pass */
+
+     /* do something controlled by a barrier */
+
+	down(&mutex);
+	count--;
+	if (count == 0) {
+		down(&turnstile1);  /* close turnstile1 again */
+		up(&turnstile2);    /* open turnstile2 for one thread */
+	}
+	up(&mutex);
+	down(&turnstile2);	/* block until opened by the last thread */
+	up(&turnstile2);	/* every thread lets another thread pass */
+				/* (turnstile2 is left open) */
+     /* do something */
+}
+---------------------------------------------------------------------
+
+* Critical Regions -> Simple programming errors (omissions, permutations) with semaphores usually lead to difficult to debug synchronization errors
+* Idea: Let the compiler do the tedious work:
+
+shared struct buffer {
+	item_t pool[N]; int count; int in; int out;
+}
+
+region buffer when (count < N)
+{
+	pool[in] = item;
+	in = (in + 1) % N;
+	count = count + 1;
+}
+region buffer when (count > 0)
+{
+	item = pool[out];
+	out = (out + 1) % N;
+	count = count - 1;
+}
+
+* Reduces the number of synchronization errors, does not eliminate synchronization errors
+
+---------------------------------------------------------------------
+
+* Monitors are special programming language constructs.
+Idea: Encapsulate the shared data object and the synchronization access methods
+into a monitor
+
+---------------------------------------------------------------------
+
+* Condition variables are special monitor variables that can be used to solve more complex coordination and synchronization problems
+* Condition variables support the two operations wait() and signal():
+	- The wait() operation blocks the calling process on the condition variable c until another process invokes signal() on c. 
+	Another process may enter the monitor while waiting to be signaled.
+	- The signal() operation unblocks a process waiting on the condition variable c.
+	The calling process must leave the monitor before the signaled process continues.
+* Condition variables are not counters. A signal() on c is ignored if no processes is waiting on c.
+
+---------------------------------------------------------------------
+
+Bounded Buffer with Monitors
+monitor BoundedBuffer
+{
+	condition full, empty;
+	int count = 0;
+	item_t buffer[N];
+	void enter(item_t item)
+	{
+		if (count == N) wait(&full);
+		buffer[in] = item;
+		in = (in + 1) % N;
+		count = count + 1;
+		if (count == 1) signal(&empty);
+	}
+	item_t remove()
+	{
+		if (count == 0) wait(&empty);
+		item = buffer[out];
+		out = (out + 1) % N;
+		count = count - 1;
+		if (count == N-1) signal(&full);
+		return item;
+	}
+}
+
+---------------------------------------------------------------------
+
+Exchange of messages can be used for synchronization
+* Two primitive operations: send(destination, message); recv(source, message);
+
+Bounded Buffer with Messages
+• Messages are used as tokens which control the exchange of items
+• Consumers initially generate and send a number of tokens to the producers
+
+void init() { for (i = 0; i < N; i++) { send(&producer, &m); } }
+void producer()
+{
+	produce(&item);
+	recv(&consumer, &m);
+	pack(&m, item);
+	send(&consumer, &m);
+}
+void consumer()
+{
+	recv(&producer, &m);
+	unpack(&m, &item)
+	send(&producer, &m);
+	consume(item);
+}
+
+---------------------------------------------------------------------
+
+semaphore s1 = 1, s2 = 1;
+
+void p1()
+{
+	down(&s1);
+	down(&s2);
+	critical_section();
+	up(&s2);
+	up(&s1);
+}
+void p2()
+{
+	down(&s2);
+	down(&s1);
+	critical_section();
+	up(&s1);
+	up(&s2);
+}
+
+---------------------------------------------------------------------
+
+* Banker’s Algorithm in Operating System
+The banker’s algorithm is a resource allocation and deadlock avoidance algorithm that tests for safety by simulating the allocation for predetermined maximum possible amounts of all resources, then makes an “s-state” check to test for possible activities, before deciding whether allocation should be allowed to continue.
+
+---------------------------------------------------------------------
+
+* Linkers:
+Relocatable object files (.o files)
+• Contains code and data in a form that can be combined with other relocatable
+object files
+Executable object files
+• Contains code and data in a form that can be loaded directly into memory
+Shared object files (.so files)
+• Special type of relocatable object file that can be loaded into memory and linked
+dynamically at either load time or run-time
+
+---------------------------------------------------------------------
+
+Global symbols
+• Symbols defined by a module that can be referenced by other modules
+External symbols
+• Global symbols that are referenced by a module but defined by some other module
+Local symbols
+• Symbols that are defined and referenced exclusively by a single module
+
+---------------------------------------------------------------------
+
+Strong Symbols
+• Functions and initialized global variables
+Weak Symbols
+• Uninitialized global variables
+Linker Rules:
+• Rule 1: Multiple strong symbols with the same name are not allowed
+• Rule 2: Given a strong symbol and multiple weak symbols with the same name,
+choose the strong symbol
+• Rule 3: If there are multiple weak symbols with the same name, pick an arbitrary
+one
+
+---------------------------------------------------------------------
+
+Static vs Shared libraries
+
+- Static libraries, while reusable in multiple programs, are locked into a program at compile time. 
+- Dynamic, or shared libraries on the other hand, exist as separate files outside of the executable file.
+
+- The downside of using a static library is that it’s code is locked into the final executable file and cannot be modified without a re-compile. 
+- In contrast, a dynamic library can be modified without a need to re-compile.
+
+- Because dynamic libraries live outside of the executable file, the program need only make one copy of the library’s files at compile-time. 
+- Whereas using a static library means every file in your program must have it’s own copy of the library’s files at compile-time.
+
+- The downside of using a dynamic library is that a program is much more susceptible to breaking. If a dynamic library for example becomes corrupt, the executable file may no longer work. 
+- A static library, however, is untouchable because it lives inside the executable file.
+
+- The upside of using a dynamic library is that multiple running applications can use the same library without the need for each to have it’s own copy.
+- Another benefit of using static libraries is execution speed at run-time. Because the it’s object code (binary) is already included in the executable file, multiple calls to functions can be handled much more quickly than a dynamic library’s code, which needs to be called from files outside of the executable.
+
+---------------------------------------------------------------------
+
+* Inverted Page Table
+Inverted Page Table structure consists of one-page table entry for every frame of the main memory. So the number of page table entries in the Inverted Page Table reduces to the number of frames in physical memory and a single page table is used to represent the paging information of all the processes. 
+Through the inverted page table, the overhead of storing an individual page table for every process gets eliminated and only a fixed portion of memory is required to store the paging information of all the processes together. This technique is called as inverted paging as the indexing is done with respect to the frame number instead of the logical page number. Each entry in the page table contains the following fields: Page number; Process id; Control bits; Chained pointer
+
+* Advantages and Disadvantages:
+
+- Reduced memory space – Inverted Pagetables typically reduces the amount of memory required to store the page tables to a size bound of physical memory. The maximum number of entries could be the number of page frames in the physical memory.
+- Longer lookup time – Inverted Page tables are sorted in order of frame number but the memory look-up takes place with respect to the virtual address, so, it usually takes a longer time to find the appropriate entry but often these page tables are implemented using hash data structures for a faster lookup.
+- Difficult shared memory implementation – As the Inverted Page Table stores a single entry for each frame, it becomes difficult to implement the shared memory in the page tables. Chaining techniques are used to map more than one virtual address to the entry specified in order of frame number.
+
+---------------------------------------------------------------------
+
+* Hard vs soft links
+A symbolic or soft link is an actual link to the original file, whereas a hard link is a mirror copy of the original file. If you delete the original file, the soft link has no value, because it points to a non-existent file. But in the case of hard link, it is entirely opposite. Even if you delete the original file, the hard link will still has the data of the original file. Because hard link acts as a mirror copy of the original file.
+
+In a nutshell, a soft link
+
+can cross the file system,
+allows you to link between directories,
+has different inode number and file permissions than original file,
+permissions will not be updated,
+has only the path of the original file, not the contents.
+
+A hard Link
+
+can’t cross the file system boundaries (i.e. A hardlink can only work on the same filesystem),
+can’t link directories,
+has the same inode number and permissions of original file,
+permissions will be updated if we change the permissions of source file,
+has the actual contents of original file, so that you still can view the contents, even if the original file moved or removed.
+
+---------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

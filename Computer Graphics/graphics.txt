@@ -1,0 +1,81 @@
+Explantion of the code:
+
+* In CameraPerspective.h:
+
+Added lines (In constructor):
+m_focus = 1/tan(Pif*angle/2/180);
+m_aspect = (float) resolution.width/resolution.height;
+m_xAxis = m_dir.cross(m_up);
+m_yAxis = -m_up;
+
+Explanation: In the slides the focus is taken directly, but here it is not given. So, according also to the theoretical assignment 1, since focus is pointing perpendicularly to the middle of the screen, we consider the right-angled trangle formed by focus, resolution.height/2 (resY/2), and angle/2 (as solved in theoretical assignment). Then the focus would be: f = resolution.height/2/tan(angle/2) => the angle is turned to radians, the resolution.height/2 is removed as it didn't work that way and I also asked the professor and he said that in the initialization we could take the default height as 1.
+The aspect ratio is found by its definition formula.
+As for x and y axis, as shown in the figure in slide 36 0f Raytracing 1, we can see that y axis is same as the up vector but in opposite direction (m_yAxis = -m_up), while the x axis is perependicular to both up vector and focus (with unit direction vector dir), so it can be found by using their cross product.
+
+Added lines (In InitRay):
+float ndcx = (x + 0.5) / getResolution().width;
+float ndcy = (y + 0.5) / getResolution().height;
+float sscx = (2 * ndcx - 1) * m_aspect;  
+float sscy = 2 * ndcy - 1;
+Vec3f d =  m_dir * m_focus + sscx * m_xAxis + sscy * m_yAxis;
+ray.dir = normalize(d); // Normalize: d/|d|
+ray.t = FLT_MAX; //maximal float value in the library
+ray.org = m_pos;
+
+Explanation: The above code is exactly the same as in page 36 of the sides (Raytracing 1), except from these changes: I have multiplied sscx with aspect ratio (this is something I have been subtracted points for forgetting it in the theoretical assignment 1, and it is also found in the link the other TA sent us); I have found the focus vector: focus = m_dir * m_focus (since before we just found its length); ray.t is considered as infinity in the beginning (largest float in our case), as in order to find the object that is intersected first with the ray, we need to compare it to sth, and in the beginning, if only 1 object is intersected, it will compare to largest float and it will substitute t no matter how far it is.
+
+* In Prim.h
+A getter is added (getColor(0)), so that we can get the color of the intersected objects in main function also.
+
+* In PrimPlane.h
+Added lines (In Intersect function)
+float T = (m_origin.dot(m_normal)-ray.org.dot(m_normal))/ray.dir.dot(m_normal);
+// same formula as the one derived from theoretical assignment 1 => t = (an - on)/dn as in slides
+
+if((m_normal.dot(ray.dir) == Epsilon) || (T > ray.t) || (T < Epsilon))
+ return false;
+//we check if there is not intersection between the plane and ray.dir (normal perpendicular to ray.dir), if the T we found is bigger than ray.t (so if the object is further than what we already have intersected or not), and whether the intersection ray is part of the plane or not.
+
+ray.t = T;
+
+* In PrimSphere.h
+I have also implemented the Intersect function:
+We first construct a quadratic equation for T. Then we check the cases:
+- No solution (discriminant < 0) => no intersection
+- T is unique (discriminat = 0) - in this case we check whether T is smaller than epsilon or not (ray inside the sphere). If not we make: ray.t = T
+- T has 2 solutions (we store the right solution in t1), so we store in t1 the smallest positive value; if both t1 and t2 are negative, return false.
+
+* In PrimTriangle.h
+Intersect function:
+Find barycentric coordinates for each edge, which are (n of ab) = (b-o)(a-o), for each two vertices.
+Then we directly find the lamda functions (same formula as in slide 50 in Raytracing 1). All lambdas should be positive.
+We find the normal of the triangle(perependicular (cross product) to two edges, no matter which ones). We find t, considering the fact that the dot product of the normal to the triangle and the line that connects a vertex to the intersecting point will be 0, since they're perpendicular. So, we have: n(ao+td)=0 (no+td gives the line connecting vertex a in our case, to the intersection point). Then we get the formula used for t.
+We do again the checking part as in the previous intersection functions, and then save t in ray.t.
+
+* Finally in main.cpp, we add the line std::vector<CPrim*> figures = {&s1, &s2, &s3, &p1, &t1, &t2}; to store all objects in one place.
+Then, inside the loop, we initialize a ray for each point in the image. We set the default color to white in the beginning (Vec3f col = RGB(0, 0, 0);), then if the object is intersected, we get the color of that object and put it on our image screen, for each pixel. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

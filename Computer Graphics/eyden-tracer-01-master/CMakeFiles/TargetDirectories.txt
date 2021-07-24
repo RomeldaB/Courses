@@ -1,0 +1,3 @@
+/home/romelda/Desktop/Computer Graphics/eyden-tracer-01-master/CMakeFiles/rebuild_cache.dir
+/home/romelda/Desktop/Computer Graphics/eyden-tracer-01-master/CMakeFiles/eyden-tracer.dir
+/home/romelda/Desktop/Computer Graphics/eyden-tracer-01-master/CMakeFiles/edit_cache.dir
