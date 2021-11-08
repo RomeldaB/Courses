@@ -416,7 +416,6 @@ WHERE
     :bee: Variety (self explanatory)
     :bee: Veracity $\rightarrow$ Trustworthiness of data
 
-# ***Ficken*** rasdaman!! bitte!!!
 
 # MapReduce :peach:
 * Concept
