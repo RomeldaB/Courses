@@ -423,7 +423,6 @@ WHERE
     :bee: Variety (self explanatory)
     :bee: Veracity <img src="https://latex.codecogs.com/gif.latex?&#x5C;rightarrow"/> Trustworthiness of data
   
-#  ***Ficken*** rasdaman!! bitte!!!
   
   
 #  MapReduce :peach:
